@@ -1,6 +1,6 @@
 <template>
-    <div class="container">
-        <div class="mail-box">
+  <div class="container-fluid">
+    <div class="mail-box">
             <app-sidebar :messages="messages"></app-sidebar>
             <app-content :messages="messages"></app-content>
         </div>

@@ -1,5 +1,5 @@
 <template>
-    <div class="inbox-body">
+    <div >
         <app-messages :messages="incomingMessages"></app-messages>
     </div>
 </template>
