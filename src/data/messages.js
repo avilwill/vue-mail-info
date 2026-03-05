@@ -2,12 +2,11 @@ import moment from 'moment';
 
 export default [
     {
-        subject: 'How did we do?',
+        subject: 'Designing apps with Vue.js',
         content: `
-            <p>Hello,</p>
+            <p>This is a fake note for showing</p>
             <p>You recently completed a purchase, and we'd like to know how we did. Your feedback is very important to us!</p>
             <p>Please click the following link to complete the survey. We're not going to lie, it will take way more than 5 minutes.</p>
-            <p><a href="#">SurveyDonkey.com</a></p>
         `,
         isImportant: false,
         isDeleted: false,
@@ -15,13 +14,13 @@ export default [
         type: 'incoming',
         date: moment().subtract(10, 'minutes'),
         from: {
-            name: 'SurveyDonkey.com',
-            email: 'survey@surveydonkey.com'
+            name: 'CS-322 ',
+            email: ''
         },
         attachments: []
     },
     {
-        subject: 'Login from new device',
+        subject: 'Code Review Checklist',
         content: `
             <p>Hello Bo,</p>
             <p>We noticed that your account was used to sign in from a new device, and we're pretty worried about it.</p>
@@ -36,13 +35,13 @@ export default [
         type: 'incoming',
         date: moment().subtract(30, 'minutes'),
         from: {
-            name: 'Google',
+            name: 'CS-499',
             email: 'security@accounts.google.com'
         },
         attachments: []
     },
     {
-        subject: 'Your password has been reset',
+        subject: 'Implenting API Endpoints',
         content: `
             <p>Hello Bo,</p>
             <p>This is just to notify you that someone (hopefully you) has reset your Facebook password.</p>
@@ -54,13 +53,13 @@ export default [
         type: 'incoming',
         date: moment().subtract(75, 'minutes'),
         from: {
-            name: 'Facebook',
+            name: 'CS-322',
             email: 'no-reply@facebook.com'
         },
         attachments: []
     },
     {
-        subject: 'Booking confirmation #52798',
+        subject: 'Backend vs Frontend Development',
         content: `
             <p>Hello Bo,</p>
             <p>Thank you for booking your stay on Hotels.com.</p>
@@ -73,7 +72,7 @@ export default [
         type: 'incoming',
         date: moment().subtract(2, 'days'),
         from: {
-            name: 'Hotels.com',
+            name: 'Career Research',
             email: 'booking@hotels.com'
         },
         attachments: [
@@ -84,7 +83,7 @@ export default [
         ]
     },
     {
-        subject: "Hey, what's up?",
+        subject: "GitHub Essentials",
         content: `
             <p>Hey, want to grab a cup of coffee soon?</p>
             <p>Let me know if you get this, because who really uses e-mail these days?</p>
@@ -93,13 +92,13 @@ export default [
         type: 'outgoing',
         date: moment().subtract(7, 'days'),
         from: {
-            name: 'Bo Andersen',
+            name: 'Career Research',
             email: 'info@codingexplained.com'
         },
         attachments: []
     },
     {
-        subject: 'Thank you for your purchase',
+        subject: 'IDE Recommendations',
         content: `
             <p>Thank you!</p>
             <p>We have received your payment, and your products are on the way!</p>
@@ -111,7 +110,7 @@ export default [
         type: 'incoming',
         date: moment().subtract(2, 'weeks'),
         from: {
-            name: 'Amazon',
+            name: 'CS tools',
             email: 'orders@amazon.com'
         },
         attachments: [
@@ -122,7 +121,7 @@ export default [
         ]
     },
     {
-        subject: 'Please activate your account',
+        subject: 'College Courses',
         content: `
             <p>You recently signed up for Skype, and you need to activate your account.</p>
             <p>You can do this by clicking the below link, which expires in 10 seconds, so you better hurry!</p>
@@ -136,13 +135,13 @@ export default [
         type: 'incoming',
         date: moment().subtract(2, 'months'),
         from: {
-            name: 'Skype',
+            name: 'Plan',
             email: 'accounts@skype.com'
         },
         attachments: []
     },
     {
-        subject: 'Get More Traffic to Your Website',
+        subject: 'CS certifications',
         content: `
             <p>Hello,</p>
             <p>This is clearly spam, and we don't even know your name. But since you don't have a spam filter, we thought we'd try to trick you into clicking the below phishing link.</p>
@@ -155,13 +154,13 @@ export default [
         type: 'incoming',
         date: moment().subtract(3, 'months'),
         from: {
-            name: 'We Spam, inc.',
+            name: 'Career Research',
             email: 'scam@spam.com'
         },
         attachments: []
     },
     {
-        subject: 'Collaboration',
+        subject: 'Q-training',
         content: `
             <p>Hey Adam,</p>
             <p>I would like to talk with you about a possible collaboration. I think we would both benefit from working together.</p>
@@ -173,13 +172,13 @@ export default [
         type: 'outgoing',
         date: moment().subtract(100, 'days'),
         from: {
-            name: 'Bo Andersen',
+            name: 'CS-370',
             email: 'info@codingexplained.com'
         },
         attachments: []
     },
     {
-        subject: 'I want to buy your guitar',
+        subject: 'Computer Networks',
         content: `
             <p>Hey there!</p>
             <p>I saw that you have a guitar on sale. I never played an instrument, but I figured I'd be super good at it.</p>
@@ -190,13 +189,13 @@ export default [
         type: 'outgoing',
         date: moment().subtract(4, 'months'),
         from: {
-            name: 'Bo Andersen',
+            name: 'CS-220',
             email: 'info@codingexplained.com'
         },
         attachments: []
     },
     {
-        subject: 'Remember your event on Tuesday',
+        subject: 'Tutor Information',
         content: `
             <p>This is a reminder that you have registered for an event at the local tax authorities on Tuesday.</p>
             <p>Perhaps you thought you paid a lot of taxes, living in the world's most expensive country. But no, we have a little surprise for you.</p>
@@ -208,7 +207,7 @@ export default [
         type: 'incoming',
         date: moment().subtract(5, 'months'),
         from: {
-            name: 'Tax Authorities',
+            name: 'College',
             email: 'taxes@we-want-your-money.com'
         },
         attachments: [
@@ -219,7 +218,7 @@ export default [
         ]
     },
     {
-        subject: 'Wrong Delivery',
+        subject: 'Unit Testing',
         content: `
             <p>Hey,</p>
             <p>I ordered a pizza from you guys yesterday. I ordered a vegetarian one, but you delivered a meat lover's pizza.</p>
@@ -232,7 +231,7 @@ export default [
         type: 'outgoing',
         date: moment().subtract(6, 'months'),
         from: {
-            name: 'Bo Andersen',
+            name: 'CS-370',
             email: 'info@codingexplained.com'
         },
         attachments: []
@@ -253,7 +252,7 @@ export default [
         type: 'incoming',
         date: moment().subtract(7, 'months'),
         from: {
-            name: 'Random Recruiter',
+            name: 'Career Research',
             email: 'random@recruiter.com'
         },
         attachments: [
@@ -264,7 +263,7 @@ export default [
         ]
     },
     {
-        subject: 'Your video is live!',
+        subject: 'Database management',
         content: `
             <p>Hey Coding Explained,</p>
             <p>Your video titled "Why Vue.js is Awesome" is now live on YouTube!</p>
@@ -276,13 +275,13 @@ export default [
         type: 'incoming',
         date: moment().subtract(8, 'months'),
         from: {
-            name: 'YouTube',
+            name: 'CS-470',
             email: 'video@youtube.com'
         },
         attachments: []
     },
     {
-        subject: "Here's what you missed",
+        subject: "Andriod app development",
         content: `
             <p>Hey Bo,</p>
             <p>In case you missed what happened on Slack yesterday, here you go.</p>
@@ -302,13 +301,13 @@ export default [
         type: 'incoming',
         date: moment().subtract(9, 'months'),
         from: {
-            name: 'Slack',
+            name: 'CS-220',
             email: 'notifications@slack.com'
         },
         attachments: []
     },
     {
-        subject: 'Thank you for your purchase',
+        subject: 'Work collaboration',
         content: `
             <p>Thank you for your purchase at SoundGear.com</p>
             <p>You bought the following item:</p>
@@ -322,7 +321,7 @@ export default [
         type: 'incoming',
         date: moment().subtract(10, 'months'),
         from: {
-            name: 'SoundGear.com',
+            name: 'Career Research',
             email: 'orders@soundgear.com'
         },
         attachments: [

@@ -29,8 +29,8 @@
             return {
                 history: [
                     {
-                        tag: 'app-inbox',
-                        title: 'Inbox',
+                        tag: 'app-home',
+                        title: 'Home',
                         data: {
                             messages: null
                         }
@@ -60,7 +60,7 @@
             }
         },
         components: {
-            appInbox: Inbox,
+            appHome: Inbox,
             appSent: Sent,
             appImportant: Important,
             appTrash: Trash,

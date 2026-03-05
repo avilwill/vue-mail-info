@@ -1,13 +1,5 @@
 <template>
     <div class="inbox-body">
-        <div class="mail-option">
-            <div class="btn-group">
-                <a href="#" class="btn" @click="refresh">
-                    <i class="fa fa-refresh"></i>&nbsp; Refresh
-                </a>
-            </div>
-        </div>
-
         <app-messages :messages="incomingMessages"></app-messages>
     </div>
 </template>
@@ -24,9 +16,6 @@
             }
         },
         methods: {
-            refresh() {
-                eventBus.$emit('refreshMessages');
-            }
         },
         computed: {
             incomingMessages() {

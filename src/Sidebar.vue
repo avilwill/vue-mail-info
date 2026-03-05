@@ -1,28 +1,13 @@
 <template>
     <aside class="sm-side">
-        <div class="user-head">
-            <img src="src/assets/images/profile.jpg">
-
-            <div class="user-name">
-                <h5>Bo Andersen</h5>
-                <span class="email-address">info@codingexplained.com</span>
-            </div>
-        </div>
-
         <div class="compose-wrapper">
             <app-compose></app-compose>
         </div>
 
         <ul class="inbox-nav">
-            <li :class="{ active: activeView == 'app-inbox' }">
-                <a href="#" @click.prevent="navigate('app-inbox', 'Inbox')">
-                    <i class="fa fa-inbox"></i>Inbox <span class="label label-danger pull-right">{{ unreadMessages.length }}</span>
-                </a>
-            </li>
-
-            <li :class="{ active: activeView == 'app-sent' }">
-                <a href="#" @click.prevent="navigate('app-sent', 'Sent')">
-                    <i class="fa fa-envelope-o"></i>Sent <span class="label label-default pull-right">{{ sentMessages.length }}</span>
+            <li :class="{ active: activeView == 'app-home' }">
+                <a href="#" @click.prevent="navigate('app-home', 'Home')">
+                    <i class="fa fa-inbox"></i>Home <span class="label label-danger pull-right">{{ unreadMessages.length }}</span>
                 </a>
             </li>
 
@@ -54,7 +39,7 @@
         },
         data() {
             return {
-                activeView: 'app-inbox'
+                activeView: 'app-home'
             };
         },
         created() {
