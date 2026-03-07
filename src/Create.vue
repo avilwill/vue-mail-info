@@ -93,7 +93,36 @@
         },
         methods: {
             createTicket() {
-              
+                if (!this.ticket.title.trim()) {
+                    return;
+                }
+
+                const typeMapping = {
+                    Board: 'active',
+                    Backlog: 'backlog',
+                    Done: 'done'
+                };
+
+                const type = typeMapping[this.selectedValue] || 'backlog';
+                const isDone = this.selectedValue === 'Done';
+
+                eventBus.$emit('createTicket', {
+                    ticket: {
+                        title: this.ticket.title,
+                        content: `<p>${this.ticket.content}</p>`,
+                        isImportant: false,
+                        isDone: isDone,
+                        inProgress: type === 'active',
+                        onDeck: type === 'active',
+                        qaTesting: false,
+                        type: type,
+                        date: moment(),
+                        attachments: []
+                    }
+                });
+
+                this.ticket.title = '';
+                this.ticket.content = '';
             },
             toggleDropdown() {
       this.showDropdown = !this.showDropdown;

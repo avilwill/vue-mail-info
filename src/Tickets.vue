@@ -49,8 +49,7 @@
                         <span class="ticket-date">{{ ticket.date.fromNow() }}</span>
                         <a
                             href="#"
-                            v-if="typeof ticket.isImportant !== 'undefined'"
-                            @click.prevent.stop="ticket.isImportant = !ticket.isImportant"
+                            @click.prevent.stop="toggleImportant(ticket)"
                         >
                             <i :class="['fa','fa-star',{ important: ticket.isImportant }]"></i>
                         </a>
@@ -75,8 +74,7 @@
                         <span class="ticket-date">{{ ticket.date.fromNow() }}</span>
                         <a
                             href="#"
-                            v-if="typeof ticket.isImportant !== 'undefined'"
-                            @click.prevent.stop="ticket.isImportant = !ticket.isImportant"
+                            @click.prevent.stop="toggleImportant(ticket)"
                         >
                             <i :class="['fa','fa-star',{ important: ticket.isImportant }]"></i>
                         </a>
@@ -101,8 +99,7 @@
                         <span class="ticket-date">{{ ticket.date.fromNow() }}</span>
                         <a
                             href="#"
-                            v-if="typeof ticket.isImportant !== 'undefined'"
-                            @click.prevent.stop="ticket.isImportant = !ticket.isImportant"
+                            @click.prevent.stop="toggleImportant(ticket)"
                         >
                             <i :class="['fa','fa-star',{ important: ticket.isImportant }]"></i>
                         </a>
@@ -114,7 +111,7 @@
 
     <p v-else>No tickets here yet.</p>
 </template>
-
+                            <!-- @click.prevent.stop="toggleImportant(ticket)" -->
 <script>
     import { eventBus } from './main';
 
@@ -134,6 +131,16 @@
                     data: {
                         ticket: ticket
                     }
+                });
+            },
+            toggleImportant(ticket) {
+                const updates = { isImportant: !ticket.isImportant };
+                ticket.isImportant = updates.isImportant;
+
+                eventBus.$emit('updateTicket', {
+                    id: ticket.id,
+                    updates,
+                    localTicket: ticket
                 });
             }
         }

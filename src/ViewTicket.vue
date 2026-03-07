@@ -5,16 +5,19 @@
                 <i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp; Back
             </button>
 
-            <button class="btn btn-success" @click="data.ticket.isDone = true" :disabled="data.ticket.isDone">
+                <button class="btn btn-success" @click="markDone" :disabled="data.ticket.isDone">
                 <i class="fa fa-check-square-o"></i>&nbsp; {{ data.ticket.isDone ? 'Done' : 'Mark as Done' }}
             </button>
 
-            <button v-if="data.ticket.type === 'backlog'" class="btn btn-primary" @click="data.ticket.type = 'active'">
+                <button v-if="data.ticket.type === 'backlog'" class="btn btn-primary" @click="moveToBoard">
                     <i class="fa fa-cube" aria-hidden="true"></i>&nbsp; Move to Board
             </button>
 
-            <button v-if="data.ticket.type === 'active'" class="btn btn-primary" @click="data.ticket.type = 'backlog'">
+                <button v-if="data.ticket.type === 'active'" class="btn btn-primary" @click="moveToBacklog">
                     <i class="fa fa-inbox" aria-hidden="true"></i>&nbsp; Move to Backlog
+            </button>
+            <button v-if="data.ticket.type === 'active'" class="btn btn-primary" @click="moveToInProgress">
+                    <i class="" aria-hidden="true"></i>&nbsp; Move to In Progress
             </button>
         </div>
 
@@ -58,6 +61,42 @@
                     tag: previousView.tag,
                     title: previousView.title,
                     data: previousView.data
+                });
+            },
+            markDone() {
+                if (this.data.ticket.isDone) {
+                    return;
+                }
+
+                this.data.ticket.isDone = true;
+                eventBus.$emit('updateTicket', {
+                    id: this.data.ticket.id,
+                    updates: { isDone: true },
+                    localTicket: this.data.ticket
+                });
+            },
+            moveToBoard() {
+                this.data.ticket.type = 'active';
+                eventBus.$emit('updateTicket', {
+                    id: this.data.ticket.id,
+                    updates: { type: 'active' },
+                    localTicket: this.data.ticket
+                });
+            },
+            moveToBacklog() {
+                this.data.ticket.type = 'backlog';
+                eventBus.$emit('updateTicket', {
+                    id: this.data.ticket.id,
+                    updates: { type: 'backlog' },
+                    localTicket: this.data.ticket
+                });
+            },
+            moveToInProgress() {
+                this.data.ticket.type = 'inProgress';
+                eventBus.$emit('updateTicket', {
+                    id: this.data.ticket.id,
+                    updates: { type: 'inProgress' },
+                    localTicket: this.data.ticket
                 });
             }
         },
