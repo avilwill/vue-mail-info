@@ -2,25 +2,25 @@ import moment from 'moment';
 
 export default [
     {
-        subject: 'Designing apps with Vue.js',
+        code: 'DW-121',
+        title: 'Designing apps with Vue.js',
         content: `
             <p>This is a fake note for showing</p>
             <p>You recently completed a purchase, and we'd like to know how we did. Your feedback is very important to us!</p>
             <p>Please click the following link to complete the survey. We're not going to lie, it will take way more than 5 minutes.</p>
         `,
         isImportant: false,
-        isDeleted: false,
-        isRead: false,
-        type: 'incoming',
+        isDone: false,
+        inProgress: false,
+        onDeck: false,
+        qaTesting: false,
+        type: 'backlog',
         date: moment().subtract(10, 'minutes'),
-        from: {
-            name: 'CS-322 ',
-            email: ''
-        },
         attachments: []
     },
     {
-        subject: 'Code Review Checklist',
+        code: 'DW-122',
+        title: 'Code Review Checklist',
         content: `
             <p>Hello Bo,</p>
             <p>We noticed that your account was used to sign in from a new device, and we're pretty worried about it.</p>
@@ -30,36 +30,32 @@ export default [
             <p><strong>Google Security Team</strong></p>
         `,
         isImportant: false,
-        isDeleted: false,
-        isRead: false,
-        type: 'incoming',
+        isDone: false,
+        inProgress: false,
+        onDeck: false,
+        qaTesting: false,
+        type: 'backlog',
         date: moment().subtract(30, 'minutes'),
-        from: {
-            name: 'CS-499',
-            email: 'security@accounts.google.com'
-        },
         attachments: []
     },
-    {
-        subject: 'Implenting API Endpoints',
+    {   code: 'DW-123',
+        title: 'Implenting API Endpoints',
         content: `
             <p>Hello Bo,</p>
             <p>This is just to notify you that someone (hopefully you) has reset your Facebook password.</p>
             <p>The Facebook Team</p>
         `,
         isImportant: true,
-        isDeleted: false,
-        isRead: true,
-        type: 'incoming',
+        isDone: false,
+        inProgress: false,
+        onDeck: false,
+        qaTesting: false,
+        type: 'backlog',
         date: moment().subtract(75, 'minutes'),
-        from: {
-            name: 'CS-322',
-            email: 'no-reply@facebook.com'
-        },
         attachments: []
     },
-    {
-        subject: 'Backend vs Frontend Development',
+    {   code: 'DW-124',
+        title: 'Backend vs Frontend Development',
         content: `
             <p>Hello Bo,</p>
             <p>Thank you for booking your stay on Hotels.com.</p>
@@ -67,14 +63,12 @@ export default [
             <p>We hope that you enjoy your stay!</p>
         `,
         isImportant: true,
-        isDeleted: false,
-        isRead: true,
-        type: 'incoming',
+        isDone: false,
+        inProgress: false,
+        onDeck: false,
+        qaTesting: false,
+        type: 'backlog',
         date: moment().subtract(2, 'days'),
-        from: {
-            name: 'Career Research',
-            email: 'booking@hotels.com'
-        },
         attachments: [
             {
                 fileName: 'booking.pdf',
@@ -82,37 +76,35 @@ export default [
             }
         ]
     },
-    {
-        subject: "GitHub Essentials",
+    {   code: 'DW-125',
+        title: "GitHub Essentials",
         content: `
             <p>Hey, want to grab a cup of coffee soon?</p>
             <p>Let me know if you get this, because who really uses e-mail these days?</p>
         `,
-        isDeleted: false,
-        type: 'outgoing',
+        isImportant: false,
+        inProgress: false,
+        onDeck: true,
+        qaTesting: false,
+        isDone: false,
+        type: 'active',
         date: moment().subtract(7, 'days'),
-        from: {
-            name: 'Career Research',
-            email: 'info@codingexplained.com'
-        },
         attachments: []
     },
-    {
-        subject: 'IDE Recommendations',
+    {   code: 'DW-126',
+        title: 'IDE Recommendations',
         content: `
             <p>Thank you!</p>
             <p>We have received your payment, and your products are on the way!</p>
             <p>Order ID: ABCD1234</p>
         `,
         isImportant: false,
-        isDeleted: false,
-        isRead: true,
-        type: 'incoming',
+        isDone: false,
+        inProgress: false,
+        onDeck: false,
+        qaTesting: false,
+        type: 'backlog',
         date: moment().subtract(2, 'weeks'),
-        from: {
-            name: 'CS tools',
-            email: 'orders@amazon.com'
-        },
         attachments: [
             {
                 fileName: 'order.pdf',
@@ -120,8 +112,8 @@ export default [
             }
         ]
     },
-    {
-        subject: 'College Courses',
+    {   code: 'DW-127',
+        title: 'College Courses',
         content: `
             <p>You recently signed up for Skype, and you need to activate your account.</p>
             <p>You can do this by clicking the below link, which expires in 10 seconds, so you better hurry!</p>
@@ -130,18 +122,16 @@ export default [
             <p><strong>The Skype Team</strong></p>
         `,
         isImportant: true,
-        isDeleted: false,
-        isRead: true,
-        type: 'incoming',
+        isDone: false,
+        inProgress: false,
+        onDeck: false,
+        qaTesting: false,
+        type: 'backlog',
         date: moment().subtract(2, 'months'),
-        from: {
-            name: 'Plan',
-            email: 'accounts@skype.com'
-        },
         attachments: []
     },
-    {
-        subject: 'CS certifications',
+    {   code: 'DW-128',
+        title: 'CS certifications',
         content: `
             <p>Hello,</p>
             <p>This is clearly spam, and we don't even know your name. But since you don't have a spam filter, we thought we'd try to trick you into clicking the below phishing link.</p>
@@ -149,18 +139,16 @@ export default [
             <p><a href="#we-want-to-steal-your-password">Click Here Now</a></p>
         `,
         isImportant: false,
-        isDeleted: true,
-        isRead: false,
-        type: 'incoming',
+        isDone: true,
+        inProgress: false,
+        onDeck: false,
+        qaTesting: false,
+        type: 'backlog',
         date: moment().subtract(3, 'months'),
-        from: {
-            name: 'Career Research',
-            email: 'scam@spam.com'
-        },
         attachments: []
     },
-    {
-        subject: 'Q-training',
+    {   code: 'DW-124',
+        title: 'Q-training',
         content: `
             <p>Hey Adam,</p>
             <p>I would like to talk with you about a possible collaboration. I think we would both benefit from working together.</p>
@@ -168,48 +156,46 @@ export default [
             <p>Best regards,</p>
             <p>Bo Andersen</p>
         `,
-        isDeleted: false,
-        type: 'outgoing',
+        isImportant: false,
+        inProgress: true,
+        onDeck: false,
+        qaTesting: false,
+        isDone: false,
+        type: 'active',
         date: moment().subtract(100, 'days'),
-        from: {
-            name: 'CS-370',
-            email: 'info@codingexplained.com'
-        },
         attachments: []
     },
-    {
-        subject: 'Computer Networks',
+    {   code: 'DW-130',
+        title: 'Computer Networks',
         content: `
             <p>Hey there!</p>
             <p>I saw that you have a guitar on sale. I never played an instrument, but I figured I'd be super good at it.</p>
             <p>Even though I know it's extremely annoying, I'm just going to ask "how much?"</p>
             <p>Let me know!</p>
         `,
-        isDeleted: false,
-        type: 'outgoing',
+        isImportant: false,
+        inProgress: true,
+        onDeck: false,
+        qaTesting: false,
+        isDone: false,
+        type: 'active',
         date: moment().subtract(4, 'months'),
-        from: {
-            name: 'CS-220',
-            email: 'info@codingexplained.com'
-        },
         attachments: []
     },
-    {
-        subject: 'Tutor Information',
+    {   code: 'DW-131',
+        title: 'Tutor Information',
         content: `
             <p>This is a reminder that you have registered for an event at the local tax authorities on Tuesday.</p>
             <p>Perhaps you thought you paid a lot of taxes, living in the world's most expensive country. But no, we have a little surprise for you.</p>
             <p>Can't wait to see you there!</p>
         `,
         isImportant: false,
-        isDeleted: true,
-        isRead: true,
-        type: 'incoming',
+        isDone: true,
+        inProgress: false,
+        onDeck: false,
+        qaTesting: false,
+        type: 'backlog',
         date: moment().subtract(5, 'months'),
-        from: {
-            name: 'College',
-            email: 'taxes@we-want-your-money.com'
-        },
         attachments: [
             {
                 fileName: 'invite.ics',
@@ -217,8 +203,8 @@ export default [
             }
         ]
     },
-    {
-        subject: 'Unit Testing',
+    {   code: 'DW-132',
+        title: 'Unit Testing',
         content: `
             <p>Hey,</p>
             <p>I ordered a pizza from you guys yesterday. I ordered a vegetarian one, but you delivered a meat lover's pizza.</p>
@@ -227,17 +213,17 @@ export default [
             <p>Regards,</p>
             <p>An Angry Customer</p>
         `,
-        isDeleted: false,
-        type: 'outgoing',
+        isImportant: false,
+        inProgress: false,
+        onDeck: false,
+        qaTesting: true,
+        isDone: false,
+        type: 'active',
         date: moment().subtract(6, 'months'),
-        from: {
-            name: 'CS-370',
-            email: 'info@codingexplained.com'
-        },
         attachments: []
     },
-    {
-        subject: 'Looking for a developer',
+    {   code: 'DW-133',
+        title: 'Looking for a developer',
         content: `
             <p>Hey Bo,</p>
             <p>We are looking for a developer who knows Elasticsearch and Vue.js. Would you be interested in hearing more about it?</p>
@@ -247,14 +233,12 @@ export default [
             <p>A random recruiter</p>
         `,
         isImportant: false,
-        isDeleted: false,
-        isRead: false,
-        type: 'incoming',
+        isDone: false,
+        inProgress: false,
+        onDeck: false,
+        qaTesting: false,
+        type: 'backlog',
         date: moment().subtract(7, 'months'),
-        from: {
-            name: 'Career Research',
-            email: 'random@recruiter.com'
-        },
         attachments: [
             {
                 fileName: 'job-description.pdf',
@@ -262,26 +246,24 @@ export default [
             }
         ]
     },
-    {
-        subject: 'Database management',
+    {   code: 'DW-134',
+        title: 'Database management',
         content: `
             <p>Hey Coding Explained,</p>
             <p>Your video titled "Why Vue.js is Awesome" is now live on YouTube!</p>
             <p>You can find it here: <a href="#">https://youtu.be/watch?v=hg23hgls</a></p>
         `,
         isImportant: false,
-        isDeleted: false,
-        isRead: true,
-        type: 'incoming',
+        isDone: false,
+        inProgress: false,
+        onDeck: false,
+        qaTesting: false,
+        type: 'backlog',
         date: moment().subtract(8, 'months'),
-        from: {
-            name: 'CS-470',
-            email: 'video@youtube.com'
-        },
         attachments: []
     },
-    {
-        subject: "Andriod app development",
+    {   code: 'DW-135',
+        title: "Andriod app development",
         content: `
             <p>Hey Bo,</p>
             <p>In case you missed what happened on Slack yesterday, here you go.</p>
@@ -296,18 +278,16 @@ export default [
             <p><strong>The Slack Team</strong></p>
         `,
         isImportant: false,
-        isDeleted: false,
-        isRead: true,
-        type: 'incoming',
+        isDone: false,
+        inProgress: false,
+        onDeck: false,
+        qaTesting: false,
+        type: 'backlog',
         date: moment().subtract(9, 'months'),
-        from: {
-            name: 'CS-220',
-            email: 'notifications@slack.com'
-        },
         attachments: []
     },
-    {
-        subject: 'Work collaboration',
+    {   code: 'DW-136',
+        title: 'Work collaboration',
         content: `
             <p>Thank you for your purchase at SoundGear.com</p>
             <p>You bought the following item:</p>
@@ -316,14 +296,12 @@ export default [
             </ul>
         `,
         isImportant: false,
-        isDeleted: false,
-        isRead: true,
-        type: 'incoming',
+        isDone: false,
+        inProgress: false,
+        onDeck: false,
+        qaTesting: false,
+        type: 'backlog',
         date: moment().subtract(10, 'months'),
-        from: {
-            name: 'Career Research',
-            email: 'orders@soundgear.com'
-        },
         attachments: [
             {
                 fileName: 'order-confirmation.pdf',

@@ -1,12 +1,12 @@
 <template>
-    <div >
-        <app-messages :messages="incomingMessages"></app-messages>
+    <div class="backlog-body">
+        <app-tickets :tickets="backLogTickets"></app-tickets>
     </div>
 </template>
 
 <script>
     import { eventBus } from './main';
-    import Messages from './Messages.vue';
+    import Tickets from './Tickets.vue';
 
     export default {
         props: {
@@ -18,14 +18,14 @@
         methods: {
         },
         computed: {
-            incomingMessages() {
-                return this.data.messages.filter(function(message) {
-                    return (message.type == 'incoming' && !message.isDeleted);
+            backLogTickets() {
+                return this.data.tickets.filter(function(ticket) {
+                    return (ticket.type == 'backlog' && !ticket.isDone);
                 });
             }
         },
         components: {
-            appMessages: Messages
+            appTickets: Tickets
         }
     }
 </script>

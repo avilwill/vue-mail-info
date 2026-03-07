@@ -1,10 +1,11 @@
 <template>
     <div class="backlog-body">
-        <app-tickets :tickets="importantTickets"></app-tickets>
+        <app-tickets :tickets="activeTickets"></app-tickets>
     </div>
 </template>
 
 <script>
+    import { eventBus } from './main';
     import Tickets from './Tickets.vue';
 
     export default {
@@ -15,9 +16,9 @@
             }
         },
         computed: {
-            importantTickets() {
+            activeTickets() {
                 return this.data.tickets.filter(function(ticket) {
-                    return (ticket.type == 'backlog' && ticket.isImportant === true && !ticket.isDone);
+                    return (ticket.type == 'active' && !ticket.isDone);
                 });
             }
         },

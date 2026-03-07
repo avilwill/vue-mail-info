@@ -1,6 +1,6 @@
 <template>
     <aside class="lg-side">
-        <div class="inbox-head">
+        <div class="backlog-head">
             <h3>{{ currentView.title }}</h3>
         </div>
 
@@ -12,15 +12,15 @@
 
 <script>
     import { eventBus } from './main';
-    import Inbox from './Inbox.vue';
-    import Sent from './Sent.vue';
+    import BackLog from './BackLog.vue';
+    import Board from './Board.vue';
     import Important from './Important.vue';
-    import Trash from './Trash.vue';
-    import ViewMessage from './ViewMessage.vue';
+    import Done from './Done.vue';
+    import ViewTicket from './ViewTicket.vue';
 
     export default {
         props: {
-            messages: {
+            tickets: {
                 type: Array,
                 required: true
             }
@@ -29,10 +29,10 @@
             return {
                 history: [
                     {
-                        tag: 'app-home',
-                        title: 'Home',
+                        tag: 'app-board',
+                        title: 'Board',
                         data: {
-                            messages: null
+                            tickets: null
                         }
                     }
                 ]
@@ -52,7 +52,7 @@
         computed: {
             currentView() {
                 let current = this.history[0];
-                current.data.messages = this.messages;
+                current.data.tickets = this.tickets;
                 return current;
             },
             previousView() {
@@ -60,11 +60,11 @@
             }
         },
         components: {
-            appHome: Inbox,
-            appSent: Sent,
+            appBacklog: BackLog,
+            appBoard: Board,
             appImportant: Important,
-            appTrash: Trash,
-            appViewMessage: ViewMessage
+            appDone: Done,
+            appViewTicket: ViewTicket
         }
     }
 </script>

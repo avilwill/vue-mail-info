@@ -1,6 +1,6 @@
 <template>
     <div class="backlog-body">
-        <app-tickets :tickets="importantTickets"></app-tickets>
+        <app-tickets :tickets="completedTickets"></app-tickets>
     </div>
 </template>
 
@@ -15,9 +15,9 @@
             }
         },
         computed: {
-            importantTickets() {
+            completedTickets() {
                 return this.data.tickets.filter(function(ticket) {
-                    return (ticket.type == 'backlog' && ticket.isImportant === true && !ticket.isDone);
+                    return ticket.isDone === true;
                 });
             }
         },

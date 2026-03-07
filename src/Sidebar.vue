@@ -1,25 +1,39 @@
 <template>
     <aside class="sm-side">
-        <div class="compose-wrapper">
-            <app-compose></app-compose>
+                <div class="create-wrapper">
+         <div class="user-head">
+            <img src="src/assets/images/willora-logo.png">
+
+            <div class="user-name">
+                <h5>WILLORA</h5>
+            </div>
+        </div>
+        </div>
+        <div class="create-button-wrapper">
+            <app-create></app-create>
         </div>
 
-        <ul class="inbox-nav">
-            <li :class="{ active: activeView == 'app-home' }">
-                <a href="#" @click.prevent="navigate('app-home', 'Home')">
-                    <i class="fa fa-inbox"></i>Home <span class="label label-danger pull-right">{{ unreadMessages.length }}</span>
+        <ul class="backlog-nav">
+            <li :class="{ active: activeView == 'app-board' }">
+                <a href="#" @click.prevent="navigate('app-board', 'Board')">
+                    <i class="fa fa-cube"></i>Board <span class="label label-success pull-right">{{ activeTickets.length }}</span>
+                </a>
+            </li>
+            <li :class="{ active: activeView == 'app-backlog' }">
+                <a href="#" @click.prevent="navigate('app-backlog', 'Backlog')">
+                    <i class="fa fa-inbox"></i>Backlog <span class="label label-info pull-right">{{ backLogTickets.length }}</span>
                 </a>
             </li>
 
             <li :class="{ active: activeView == 'app-important' }">
                 <a href="#" @click.prevent="navigate('app-important', 'Important')">
-                    <i class="fa fa-bookmark-o"></i>Important <span class="label label-warning pull-right">{{ importantMessages.length }}</span>
+                    <i class="fa fa-exclamation-triangle"></i>Important <span class="label label-danger pull-right">{{ importantTickets.length }}</span>
                 </a>
             </li>
 
-            <li :class="{ active: activeView == 'app-trash' }">
-                <a href="#" @click.prevent="navigate('app-trash', 'Trash')">
-                    <i class=" fa fa-trash-o"></i>Trash <span class="label label-default pull-right">{{ trashedMessages.length }}</span>
+            <li :class="{ active: activeView == 'app-done' }">
+                <a href="#" @click.prevent="navigate('app-done', 'Done')">
+                    <i class="fa fa-check-square-o"></i>Done <span class="label label-default pull-right">{{ completedTickets.length }}</span>
                 </a>
             </li>
         </ul>
@@ -28,18 +42,18 @@
 
 <script>
     import { eventBus } from './main';
-    import Compose from './Compose.vue';
+    import Create from './Create.vue';
 
     export default {
         props: {
-            messages: {
+            tickets: {
                 type: Array,
                 required: true
             }
         },
         data() {
             return {
-                activeView: 'app-home'
+                activeView: 'app-board'
             };
         },
         created() {
@@ -56,29 +70,29 @@
             }
         },
         computed: {
-            unreadMessages() {
-                return this.messages.filter(function(message) {
-                    return (message.type == 'incoming' && !message.isRead && !message.isDeleted);
+            backLogTickets() {
+                return this.tickets.filter(function(ticket) {
+                    return (ticket.type == 'backlog' && !ticket.inProgress && !ticket.isDone);
                 });
             },
-            sentMessages() {
-                return this.messages.filter(function(message) {
-                    return (message.type == 'outgoing' && !message.isDeleted);
+            activeTickets() {
+                return this.tickets.filter(function(ticket) {
+                    return (ticket.type == 'active' && !ticket.isDone);
                 });
             },
-            importantMessages() {
-                return this.messages.filter(function(message) {
-                    return (message.type == 'incoming' && message.isImportant === true && !message.isDeleted);
+            importantTickets() {
+                return this.tickets.filter(function(ticket) {
+                    return (ticket.type == 'backlog' && ticket.isImportant === true && !ticket.isDone);
                 });
             },
-            trashedMessages() {
-                return this.messages.filter(function(message) {
-                    return message.isDeleted === true;
+            completedTickets() {
+                return this.tickets.filter(function(ticket) {
+                    return ticket.isDone === true;
                 });
             }
         },
         components: {
-            appCompose: Compose
+            appCreate: Create
         }
     }
 </script>

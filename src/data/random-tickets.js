@@ -2,7 +2,7 @@ import moment from 'moment';
 
 export default [
     {
-        subject: 'Confirm your subscription',
+        title: 'Confirm your subscription',
         content: `
             <p>Hello Bo,</p>
             <p>Thank you for subscribing to our newsletter!</p>
@@ -11,18 +11,16 @@ export default [
             <p>Thanks again!</p>
         `,
         isImportant: false,
-        isDeleted: false,
-        isRead: false,
-        type: 'incoming',
+        isDone: false,
+        inProgress: true,
+        onDeck: false,
+        qaTesting: false,
+        type: 'backlog',
         date: moment(),
-        from: {
-            name: 'Coding Explained',
-            email: 'irony@codingexplained.com'
-        },
         attachments: []
     },
     {
-        subject: 'CrunchBase Daily',
+        title: 'CrunchBase Daily',
         content: `
             <p>Here's what happened yesterday.</p>
             <ul>
@@ -33,32 +31,28 @@ export default [
             <p>Try to pay more attention next time.</p>
         `,
         isImportant: false,
-        isDeleted: false,
-        isRead: false,
-        type: 'incoming',
+        isDone: false,
+        inProgress: true,
+        onDeck: false,
+        qaTesting: false,
+        type: 'backlog',
         date: moment(),
-        from: {
-            name: 'CrunchBase',
-            email: 'daily@crunchbase.com'
-        },
         attachments: []
     },
     {
-        subject: 'Design',
+        title: 'Design',
         content: `
             <p>Hey Bo, here's the design that you requested.</p>
             <p>Let me know what you think. Hope you like it!</p>
             <p>Sarah</p>
         `,
         isImportant: false,
-        isDeleted: false,
-        isRead: false,
-        type: 'incoming',
+        isDone: false,
+        inProgress: true,
+        onDeck: false,
+        qaTesting: false,
+        type: 'backlog',
         date: moment(),
-        from: {
-            name: 'Sarah',
-            email: 'sarah-designer@gmail.com'
-        },
         attachments: [
             {
                 fileName: 'design.psd',

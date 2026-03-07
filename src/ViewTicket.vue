@@ -1,36 +1,33 @@
 <template>
-    <div class="inbox-body">
-        <div class="mail-option">
+    <div class="backlog-body">
+        <div class="ticket-option">
             <button class="btn btn-primary" @click="navigateBack">
                 <i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp; Back
             </button>
 
-            <button class="btn btn-danger" @click="data.message.isDeleted = true" :disabled="data.message.isDeleted">
-                <i class="fa fa-trash-o"></i>&nbsp; {{ data.message.isDeleted ? 'Deleted' : 'Delete' }}
+            <button class="btn btn-success" @click="data.ticket.isDone = true" :disabled="data.ticket.isDone">
+                <i class="fa fa-check-square-o"></i>&nbsp; {{ data.ticket.isDone ? 'Done' : 'Mark as Done' }}
             </button>
 
-            <template v-if="typeof data.message.isRead !== 'undefined'">
-                <button class="btn btn-primary" @click="data.message.isRead = false" :disabled="!data.message.isRead">
-                    <i class="fa fa-envelope-open" aria-hidden="true"></i>&nbsp; Mark as unread
-                </button>
+            <button v-if="data.ticket.type === 'backlog'" class="btn btn-primary" @click="data.ticket.type = 'active'">
+                    <i class="fa fa-cube" aria-hidden="true"></i>&nbsp; Move to Board
+            </button>
 
-                <button class="btn btn-primary" @click="data.message.isRead = true" :disabled="data.message.isRead">
-                    <i class="fa fa-envelope" aria-hidden="true"></i>&nbsp; Mark as read
-                </button>
-            </template>
+            <button v-if="data.ticket.type === 'active'" class="btn btn-primary" @click="data.ticket.type = 'backlog'">
+                    <i class="fa fa-inbox" aria-hidden="true"></i>&nbsp; Move to Backlog
+            </button>
         </div>
 
-        <p><strong>Date:</strong> {{ data.message.date.fromNow() }}</p>
-        <p><strong>From:</strong> {{ data.message.from.name }} <{{ data.message.from.email }}></p>
+        <p><strong>Date:</strong> {{ data.ticket.date.fromNow() }}</p>
         <hr>
 
-        <div v-html="data.message.content" class="message"></div>
+        <div v-html="data.ticket.content" class="ticket"></div>
 
-        <div v-if="data.message.attachments.length > 0" class="attachments">
+        <div v-if="data.ticket.attachments.length > 0" class="attachments">
             <h4>Attachments</h4>
 
             <ul>
-                <li v-for="attachment in data.message.attachments">
+                <li v-for="attachment in data.ticket.attachments">
                     <i class="fa fa-paperclip"></i> {{ attachment.fileName }} ({{ attachment.size | formatBytes }})
                 </li>
             </ul>
@@ -49,8 +46,8 @@
             },
         },
         activated() {
-            if (typeof this.data.message.isRead !== 'undefined') {
-                this.data.message.isRead = true;
+            if (typeof this.data.ticket.inProgress !== 'undefined') {
+                this.data.ticket.inProgress = true;
             }
         },
         methods: {
