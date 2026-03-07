@@ -1,0 +1,85 @@
+[
+  {
+    "code": "DW-121",
+    "title": "Designing apps with Vue.js",
+    "content": "<p>This is a fake note for showing</p><p>You recently completed a purchase, and we'd like to know how we did. Your feedback is very important to us!</p><p>Please click the following link to complete the survey. We're not going to lie, it will take way more than 5 minutes.</p>",
+    "isImportant": false,
+    "isDone": false,
+    "inProgress": false,
+    "onDeck": false,
+    "qaTesting": false,
+    "type": "backlog",
+    "date": "2024-10-01T10:00:00.000Z",
+    "attachments": []
+  },
+  {
+    "code": "DW-122",
+    "title": "Code Review Checklist",
+    "content": "<p>Hello Bo,</p><p>We noticed that your account was used to sign in from a new device, and we're pretty worried about it.</p><p>It looks like the login came from <i class=\"fa fa-globe\" aria-hidden=\"true\"></i> <strong>Moscow, Russia</strong>, so unless you are on vacation, you're probably in big trouble.</p><p>We just thought we'd let you know.</p><p>Good luck with that!</p><p><strong>Google Security Team</strong></p>",
+    "isImportant": false,
+    "isDone": false,
+    "inProgress": false,
+    "onDeck": false,
+    "qaTesting": false,
+    "type": "backlog",
+    "date": "2024-10-02T08:45:00.000Z",
+    "attachments": []
+  },
+  {
+    "code": "DW-123",
+    "title": "Implenting API Endpoints",
+    "content": "<p>Hello Bo,</p><p>This is just to notify you that someone (hopefully you) has reset your Facebook password.</p><p>The Facebook Team</p>",
+    "isImportant": true,
+    "isDone": false,
+    "inProgress": false,
+    "onDeck": false,
+    "qaTesting": false,
+    "type": "backlog",
+    "date": "2024-10-03T09:30:00.000Z",
+    "attachments": []
+  },
+  {
+    "code": "DW-124",
+    "title": "Backend vs Frontend Development",
+    "content": "<p>Hello Bo,</p><p>Thank you for booking your stay on Hotels.com.</p><p>You will find your reservation details attached to this message.</p><p>We hope that you enjoy your stay!</p>",
+    "isImportant": true,
+    "isDone": false,
+    "inProgress": false,
+    "onDeck": false,
+    "qaTesting": false,
+    "type": "backlog",
+    "date": "2024-10-04T11:15:00.000Z",
+    "attachments": [
+      {
+        "fileName": "booking.pdf",
+        "size": 1000000
+      }
+    ]
+  },
+  {
+    "code": "DW-125",
+    "title": "GitHub Essentials",
+    "content": "<p>Hey, want to grab a cup of coffee soon?</p><p>Let me know if you get this, because who really uses e-mail these days?</p>",
+    "isImportant": false,
+    "isDone": false,
+    "inProgress": false,
+    "onDeck": true,
+    "qaTesting": false,
+    "type": "active",
+    "date": "2024-10-05T13:20:00.000Z",
+    "attachments": []
+  },
+  {
+    "code": "DW-126",
+    "title": "Design updates for project managment app",
+    "content": "<p>Hey, want to grab a cup of coffee soon?</p><p>Let me know if you get this, because who really uses e-mail these days?</p>",
+    "isImportant": false,
+    "isDone": false,
+    "inProgress": false,
+    "onDeck": false,
+    "qaTesting": true,
+    "type": "active",
+    "date": "2024-10-05T13:20:00.000Z",
+    "attachments": []
+  }
+]
