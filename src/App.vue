@@ -1,3 +1,6 @@
+<!-- Main application component
+ Purpose: Manages the overall layout and state of the application, including tickets and event handling.
+-->
 <template>
   <div class="container-fluid">
     <div class="board-box">

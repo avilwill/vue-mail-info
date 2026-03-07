@@ -1,18 +1,21 @@
 <template>
     <aside class="sm-side">
-                <div class="create-wrapper">
-         <div class="user-head">
-            <img src="src/assets/images/willora-logo.png">
+        <!-- Side bar header logo -->
+        <div class="create-wrapper">
+            <div class="user-head">
+                <img src="src/assets/images/willora-logo.png">
 
-            <div class="user-name">
-                <h5>WILLORA</h5>
+                <div class="user-name">
+                    <h5>WILLORA</h5>
+                </div>
             </div>
         </div>
-        </div>
+        <!-- Create new ticket button -->
         <div class="create-button-wrapper">
             <app-create></app-create>
         </div>
 
+        <!-- Board navigation -->
         <ul class="backlog-nav">
             <li :class="{ active: activeView == 'app-board' }">
                 <a href="#" @click.prevent="navigate('app-board', 'Board')">

@@ -1,3 +1,13 @@
+<!--
+    Component: Content
+    Purpose: Renders a sidebar area with a header and a dynamic child component.
+    Usage: Place this comment at the top of Content.vue (above <template>).
+    Details:
+        - Displays the current view title from `currentView.title`.
+        - Dynamically renders the component specified by `currentView.tag`.
+        - Passes `currentView.data` to the dynamic component as the `data` prop.
+        - Wraps the dynamic component with <keep-alive> to preserve state.
+-->
 <template>
     <aside class="lg-side">
         <div class="backlog-head">

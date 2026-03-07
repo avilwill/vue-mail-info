@@ -15,5 +15,4 @@ npm run server
 # Build for production with minification
 npm run build
 ```
-# vue-mail-info
-# vue-mail-info
+

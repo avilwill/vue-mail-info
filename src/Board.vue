@@ -1,3 +1,4 @@
+<!-- Displays active tickets in the board view -->
 <template>
     <div class="backlog-body">
         <app-tickets :tickets="activeTickets"></app-tickets>

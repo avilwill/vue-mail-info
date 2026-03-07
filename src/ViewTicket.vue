@@ -4,16 +4,14 @@
             <button class="btn btn-primary" @click="navigateBack">
                 <i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp; Back
             </button>
-
-                <button class="btn btn-success" @click="markDone" :disabled="data.ticket.isDone">
+<!-- Action bar buttons to manage ticket status -->
+            <button class="btn btn-success" @click="markDone" :disabled="data.ticket.isDone">
                 <i class="fa fa-check-square-o"></i>&nbsp; {{ data.ticket.isDone ? 'Done' : 'Mark as Done' }}
             </button>
-
-                <button v-if="data.ticket.type === 'backlog'" class="btn btn-primary" @click="moveToBoard">
+            <button v-if="data.ticket.type === 'backlog'" class="btn btn-primary" @click="moveToBoard">
                     <i class="fa fa-cube" aria-hidden="true"></i>&nbsp; Move to Board
             </button>
-
-                <button v-if="data.ticket.type === 'active'" class="btn btn-primary" @click="moveToBacklog">
+            <button v-if="data.ticket.type === 'active'" class="btn btn-primary" @click="moveToBacklog">
                     <i class="fa fa-inbox" aria-hidden="true"></i>&nbsp; Move to Backlog
             </button>
             <button v-if="data.ticket.type === 'active'" class="btn btn-primary" @click="moveToInProgress">
@@ -21,9 +19,8 @@
             </button>
         </div>
 
-        <p><strong>Date:</strong> {{ data.ticket.date.fromNow() }}</p>
         <hr>
-
+<!-- Ticket content -->
         <div v-html="data.ticket.content" class="ticket"></div>
 
         <div v-if="data.ticket.attachments.length > 0" class="attachments">
@@ -48,6 +45,7 @@
                 required: true
             },
         },
+// Verify if tickert is in progress for proper button state when opening ticket details
         activated() {
             if (typeof this.data.ticket.inProgress !== 'undefined') {
                 this.data.ticket.inProgress = true;

@@ -1,3 +1,4 @@
+<!-- Displays tickets in the backlog view -->
 <template>
     <div class="backlog-body">
         <app-tickets :tickets="backLogTickets"></app-tickets>

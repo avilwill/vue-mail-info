@@ -1,4 +1,5 @@
 <template>
+    <!-- Table for backlog, done, and important tabs -->
     <table
         v-if="tickets.length > 0 && tickets.some(t => ['backlog', 'done', 'important'].includes(t.type))"
         class="table table-backlog table-hover"
@@ -26,7 +27,8 @@
             </tr>
         </tbody>
     </table>
-
+<!-- Table for active (Board) tickets -->
+ <!-- catagorized into On Deck, In Progress, and QA Testing -->
     <table
         v-else-if="tickets.length > 0"
         class="table table-backlog"
@@ -108,10 +110,9 @@
             </template>
         </tbody>
     </table>
-
+<!-- When there are no tickets -->
     <p v-else>No tickets here yet.</p>
 </template>
-                            <!-- @click.prevent.stop="toggleImportant(ticket)" -->
 <script>
     import { eventBus } from './main';
 

@@ -259,14 +259,6 @@ ul.backlog-pagination li {
     box-shadow: none;
 }
 
-/* .btn-send, .btn-send:hover {
-    background: none repeat scroll 0 0 #00a8b3;
-    color: #fff;
-}
-
-.btn-send:hover {
-    background: none repeat scroll 0 0 #009da7;
-} */
  .modal-content {
     border-radius: 16px;
     background-color: #ffe7f3;
@@ -430,6 +422,7 @@ ul.backlog-pagination li {
     background: #efb7e6;
 }
 
+/* create task dropdown styles */
 .linear-dropdown {
   position: relative;
   display: inline-block;

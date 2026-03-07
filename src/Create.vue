@@ -1,10 +1,10 @@
 <template>
     <div>
         <a href="#createModal" data-toggle="modal" class="btn btn-create">Create New Task</a>
-
         <div role="dialog" tabindex="-1" id="createModal" class="modal fade" style="display: none;">
             <div class="modal-dialog">
                 <div class="modal-content">
+<!-- Modal header with dropdown for ticket type selection -->
                     <div class="modal-header">
                         <button aria-hidden="true" data-dismiss="modal" class="close" type="button">&times;</button>
                         <div class="linear-dropdown" ref="dropdown">
@@ -37,7 +37,7 @@
                             </div>
                         </div>
                     </div>
-
+<!-- Modal body with input fields for ticket title and description -->
                     <div class="modal-body">
                         <div class="linear-create-modal">
                             <div class="linear-create-body">
@@ -57,7 +57,7 @@
                                 class="linear-description-input"
                                 ></textarea>
                             </div>
-
+<!-- Modal footer with create button -->
                             <div class="linear-create-footer">
                                 <button class="linear-primary-btn" @click="createTicket">Create New Task</button>
                             </div>
@@ -137,6 +137,6 @@
         this.showDropdown = false;
       }
     },
-        }
     }
+}
 </script>

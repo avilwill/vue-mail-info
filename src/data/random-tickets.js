@@ -1,3 +1,5 @@
+// This file contains randomly generated ticket data for testing and demonstration purposes.
+// Each ticket has a title, content, status flags, type, date, and optional attachments.
 import moment from 'moment';
 
 export default [
