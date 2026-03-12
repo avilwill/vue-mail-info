@@ -1,5 +1,10 @@
+<!--
+    Tickets list: either a single table (Backlog/Done/Important) or a Board table
+    with sections On Deck, In Progress, QA Testing. Row click opens ticket detail;
+    star toggles important (Board only). Empty state: "No tickets here yet."
+-->
 <template>
-    <!-- Table for backlog, done, and important tabs -->
+    <!-- List view: one table for backlog, done, or important-type tickets -->
     <table
         v-if="tickets.length > 0 && tickets.some(t => ['backlog', 'done', 'important'].includes(t.type))"
         class="table table-backlog table-hover"
@@ -27,8 +32,7 @@
             </tr>
         </tbody>
     </table>
-<!-- Table for active (Board) tickets -->
- <!-- catagorized into On Deck, In Progress, and QA Testing -->
+    <!-- Board view: active tickets in sections On Deck, In Progress, QA Testing -->
     <table
         v-else-if="tickets.length > 0"
         class="table table-backlog"
@@ -110,22 +114,27 @@
             </template>
         </tbody>
     </table>
-<!-- When there are no tickets -->
     <p v-else>No tickets here yet.</p>
 </template>
 <script>
     import { eventBus } from './main';
 
+    /**
+     * Tickets: shared list/board display used by BackLog, Board, Important, and Done.
+     * Renders one of: flat table (backlog/done/important), board table with sections,
+     * or empty message. Emits changeView to open detail, updateTicket to toggle important.
+     */
     export default {
         props: {
+            /** Tickets to show (already filtered by parent: BackLog, Board, Important, or Done). */
             tickets: {
                 type: Array,
                 required: true
             }
         },
         methods: {
+            /** Open ticket detail view; Content switches to app-view-ticket with this ticket. */
             openTicket(ticket) {
-                console.log('Opening ticket: ' + ticket);
                 eventBus.$emit('changeView', {
                     tag: 'app-view-ticket',
                     title: ticket.title,
@@ -134,6 +143,7 @@
                     }
                 });
             },
+            /** Toggle isImportant and persist via App's updateTicket API handler. */
             toggleImportant(ticket) {
                 const updates = { isImportant: !ticket.isImportant };
                 ticket.isImportant = updates.isImportant;

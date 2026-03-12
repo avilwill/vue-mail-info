@@ -1,6 +1,10 @@
+<!--
+    Sidebar: app branding, Create button, and nav links for Board, Backlog, Important, Done.
+    Each link shows a count; clicking emits changeView so Content switches the main panel.
+-->
 <template>
     <aside class="sm-side">
-        <!-- Side bar header logo -->
+        <!-- Sidebar header: logo and app name -->
         <div class="create-wrapper">
             <div class="user-head">
                 <img src="src/assets/images/willora-logo.png">
@@ -47,8 +51,14 @@
     import { eventBus } from './main';
     import Create from './Create.vue';
 
+    /**
+     * Sidebar: navigation and create action. Receives tickets from App, derives
+     * counts per view (Board, Backlog, Important, Done), and syncs activeView
+     * with Content via changeView events.
+     */
     export default {
         props: {
+            /** Full ticket list from App; used to compute counts for nav labels. */
             tickets: {
                 type: Array,
                 required: true
@@ -56,6 +66,7 @@
         },
         data() {
             return {
+                /** Current view tag (e.g. 'app-board'); drives nav highlight and is updated by changeView. */
                 activeView: 'app-board'
             };
         },
@@ -65,6 +76,7 @@
             });
         },
         methods: {
+            /** Switch main panel to the given view; Content listens and updates its history. */
             navigate(newView, title) {
                 eventBus.$emit('changeView', {
                     tag: newView,
@@ -73,21 +85,25 @@
             }
         },
         computed: {
+            /** Backlog tickets not in progress and not done (for Backlog nav count). */
             backLogTickets() {
                 return this.tickets.filter(function(ticket) {
                     return (ticket.type == 'backlog' && !ticket.inProgress && !ticket.isDone);
                 });
             },
+            /** Active (board) tickets not done (for Board nav count). */
             activeTickets() {
                 return this.tickets.filter(function(ticket) {
                     return (ticket.type == 'active' && !ticket.isDone);
                 });
             },
+            /** Backlog tickets marked important and not done (for Important nav count). */
             importantTickets() {
                 return this.tickets.filter(function(ticket) {
                     return (ticket.type == 'backlog' && ticket.isImportant === true && !ticket.isDone);
                 });
             },
+            /** Completed tickets (for Done nav count). */
             completedTickets() {
                 return this.tickets.filter(function(ticket) {
                     return ticket.isDone === true;

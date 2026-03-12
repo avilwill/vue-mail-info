@@ -1,3 +1,8 @@
+/**
+ * Tickets API server: Express app with SQLite. CRUD for tickets; optional seed from JSON.
+ * Start: initDb() then listen on PORT. Routes under /api/tickets and /api/health.
+ */
+
 const path = require('path');
 const fs = require('fs');
 const express = require('express');
@@ -13,8 +18,10 @@ const app = express();
 app.use(cors());
 app.use(express.json({ limit: '1mb' }));
 
+/** SQLite connection (set in initDb). */
 let db;
 
+/** Convert a DB row to API shape: booleans for flags, attachments parsed from JSON. */
 const normalizeTicket = (row) => {
   if (!row) {
     return null;
@@ -36,6 +43,7 @@ const normalizeTicket = (row) => {
   };
 };
 
+/** Convert API payload to DB shape: 0/1 for flags, attachments as JSON string. */
 const buildTicketPayload = (payload = {}) => {
   return {
     code: payload.code || null,
@@ -52,6 +60,7 @@ const buildTicketPayload = (payload = {}) => {
   };
 };
 
+/** Insert a ticket; if no code, auto-assign DW-NNN. Returns normalized ticket. */
 const createTicket = async (payload) => {
   const ticket = buildTicketPayload(payload);
 
@@ -93,6 +102,7 @@ const createTicket = async (payload) => {
   return normalizeTicket(created);
 };
 
+/** Update ticket by id. allowPartial: merge with existing; else full replace. Returns normalized ticket or null. */
 const updateTicket = async (id, payload, allowPartial) => {
   const existing = await db.get('SELECT * FROM tickets WHERE id = ?', [id]);
   if (!existing) {
@@ -144,6 +154,7 @@ const updateTicket = async (id, payload, allowPartial) => {
   return normalizeTicket(updated);
 };
 
+/** If SEED_PATH exists, load JSON and createTicket for each item (used when table is empty). */
 const seedDatabase = async () => {
   if (!fs.existsSync(SEED_PATH)) {
     return;
@@ -155,6 +166,7 @@ const seedDatabase = async () => {
   }
 };
 
+/** Open SQLite at DB_PATH, create tickets table if missing, seed if empty. */
 const initDb = async () => {
   db = await open({
     filename: DB_PATH,
@@ -182,15 +194,20 @@ const initDb = async () => {
   }
 };
 
+// --- Routes ---
+
+/** Health check. */
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok' });
 });
 
+/** GET all tickets, newest first. */
 app.get('/api/tickets', async (req, res) => {
   const rows = await db.all('SELECT * FROM tickets ORDER BY id DESC');
   res.json(rows.map(normalizeTicket));
 });
 
+/** GET one ticket by id; 404 if not found. */
 app.get('/api/tickets/:id', async (req, res) => {
   const ticket = await db.get('SELECT * FROM tickets WHERE id = ?', [req.params.id]);
   if (!ticket) {
@@ -201,11 +218,13 @@ app.get('/api/tickets/:id', async (req, res) => {
   res.json(normalizeTicket(ticket));
 });
 
+/** POST new ticket; body optional, defaults applied in buildTicketPayload. */
 app.post('/api/tickets', async (req, res) => {
   const ticket = await createTicket(req.body || {});
   res.status(201).json(ticket);
 });
 
+/** PUT full replace; 404 if id not found. */
 app.put('/api/tickets/:id', async (req, res) => {
   const ticket = await updateTicket(req.params.id, req.body || {}, false);
   if (!ticket) {
@@ -216,6 +235,7 @@ app.put('/api/tickets/:id', async (req, res) => {
   res.json(ticket);
 });
 
+/** PATCH partial update; 404 if id not found. */
 app.patch('/api/tickets/:id', async (req, res) => {
   const ticket = await updateTicket(req.params.id, req.body || {}, true);
   if (!ticket) {
@@ -226,6 +246,7 @@ app.patch('/api/tickets/:id', async (req, res) => {
   res.json(ticket);
 });
 
+/** DELETE ticket by id; 404 if not found, 204 on success. */
 app.delete('/api/tickets/:id', async (req, res) => {
   const result = await db.run('DELETE FROM tickets WHERE id = ?', [req.params.id]);
   if (result.changes === 0) {
@@ -235,6 +256,8 @@ app.delete('/api/tickets/:id', async (req, res) => {
 
   res.status(204).send();
 });
+
+// --- Startup ---
 
 initDb()
   .then(() => {

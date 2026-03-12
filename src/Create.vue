@@ -1,10 +1,15 @@
+<!--
+    Create: button that opens a modal to add a new ticket. Modal has a dropdown
+    (Board / Backlog / Done) for initial placement, title and description fields,
+    and Create New Task; submits via eventBus createTicket (App calls API).
+-->
 <template>
     <div>
         <a href="#createModal" data-toggle="modal" class="btn btn-create">Create New Task</a>
         <div role="dialog" tabindex="-1" id="createModal" class="modal fade" style="display: none;">
             <div class="modal-dialog">
                 <div class="modal-content">
-<!-- Modal header with dropdown for ticket type selection -->
+                    <!-- Modal header: dropdown for where to create (Board, Backlog, Done) -->
                     <div class="modal-header">
                         <button aria-hidden="true" data-dismiss="modal" class="close" type="button">&times;</button>
                         <div class="linear-dropdown" ref="dropdown">
@@ -37,7 +42,7 @@
                             </div>
                         </div>
                     </div>
-<!-- Modal body with input fields for ticket title and description -->
+                    <!-- Modal body: title and description inputs -->
                     <div class="modal-body">
                         <div class="linear-create-modal">
                             <div class="linear-create-body">
@@ -57,7 +62,7 @@
                                 class="linear-description-input"
                                 ></textarea>
                             </div>
-<!-- Modal footer with create button -->
+                            <!-- Modal footer: submit button -->
                             <div class="linear-create-footer">
                                 <button class="linear-primary-btn" @click="createTicket">Create New Task</button>
                             </div>
@@ -72,17 +77,25 @@
     import moment from 'moment';
     import { eventBus } from './main';
 
+    /**
+     * Create: sidebar button + modal to add a new ticket. User picks Board, Backlog,
+     * or Done; enters title and description. Emits createTicket on eventBus; App
+     * performs the API call and updates the ticket list. Click-outside closes dropdown.
+     */
     export default {
         data() {
             return {
+                /** Form state: title and content. */
                 ticket: {
                     title: '',
                     content: ''
                 },
+                /** Selected destination (Board, Backlog, Done); drives type/isDone. */
                 selectedValue: 'Board',
+                /** Whether the destination dropdown is open. */
                 showDropdown: false,
-                valuesList: ['Board', 'Backlog', 'Done'] 
-
+                /** Options for the destination dropdown. */
+                valuesList: ['Board', 'Backlog', 'Done']
             };
         },
         mounted() {
@@ -92,6 +105,7 @@
             document.removeEventListener('click', this.handleClickOutside);
         },
         methods: {
+            /** Validate title, emit createTicket with payload (App calls API), then clear form. */
             createTicket() {
                 if (!this.ticket.title.trim()) {
                     return;
@@ -124,19 +138,22 @@
                 this.ticket.title = '';
                 this.ticket.content = '';
             },
+            /** Toggle the destination dropdown open/closed. */
             toggleDropdown() {
-      this.showDropdown = !this.showDropdown;
-    },
-    selectValue(value) {
-      this.selectedValue = value;
-      this.showDropdown = false;
-    },
-    handleClickOutside(event) {
-      const dropdown = this.$refs.dropdown;
-      if (dropdown && !dropdown.contains(event.target)) {
-        this.showDropdown = false;
-      }
-    },
+                this.showDropdown = !this.showDropdown;
+            },
+            /** Set destination and close dropdown. */
+            selectValue(value) {
+                this.selectedValue = value;
+                this.showDropdown = false;
+            },
+            /** Close dropdown when clicking outside the dropdown ref. */
+            handleClickOutside(event) {
+                const dropdown = this.$refs.dropdown;
+                if (dropdown && !dropdown.contains(event.target)) {
+                    this.showDropdown = false;
+                }
+            }
+        }
     }
-}
 </script>

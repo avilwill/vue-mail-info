@@ -18,15 +18,21 @@
     import { fetchTickets, createTicket, updateTicket } from './api/tickets';
     import { eventBus } from './main';
 
+    /**
+     * Root component: holds the single source of truth for tickets and performs
+     * all API-backed create/update operations in response to eventBus events.
+     */
     export default {
         data() {
             return {
+                /** All tickets from the API; shared with Sidebar and Content. */
                 tickets: []
             };
         },
         created() {
             this.loadTickets();
 
+            // EventBus: child components emit these; App performs the API call and updates tickets.
             eventBus.$on('refreshTickets', () => {
                 this.addRandomTicket();
             });
@@ -40,17 +46,20 @@
             });
         },
         methods: {
+            /** Load all tickets from the API and set tickets (with normalized date/attachments). */
             loadTickets() {
                 return fetchTickets().then(tickets => {
                     this.tickets = tickets.map(this.normalizeTicket);
                 });
             },
+            /** Normalize a raw API ticket: date as moment, attachments as array. */
             normalizeTicket(ticket) {
                 return Object.assign({}, ticket, {
                     date: ticket.date ? moment(ticket.date) : moment(),
                     attachments: Array.isArray(ticket.attachments) ? ticket.attachments : []
                 });
             },
+            /** Convert date-like value to an ISO string for the API. */
             formatDate(value) {
                 if (!value) {
                     return new Date().toISOString();
@@ -66,6 +75,7 @@
 
                 return new Date().toISOString();
             },
+            /** Create one ticket from random-tickets data via API, then prepend to tickets. */
             addRandomTicket() {
                 const randomIndex = Math.floor(Math.random() * randomTickets.length);
                 const randomTicket = randomTickets[randomIndex];
@@ -78,6 +88,7 @@
                     this.tickets = [this.normalizeTicket(created), ...this.tickets];
                 });
             },
+            /** Create a ticket via API (from Create modal or event), then prepend to tickets. */
             handleCreateTicket(ticket) {
                 return createTicket(
                     Object.assign({}, ticket, {
@@ -87,6 +98,7 @@
                     this.tickets = [this.normalizeTicket(created), ...this.tickets];
                 });
             },
+            /** Update a ticket via API, then replace the matching item in tickets. */
             handleUpdateTicket(id, updates, localTicket) {
                 return updateTicket(
                     id,
