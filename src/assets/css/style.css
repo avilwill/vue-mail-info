@@ -73,7 +73,8 @@
 
 /* Buttons */
 .btn-create {
-    background: none repeat scroll 0 0 #ffb1df;
+    background: none repeat scroll 0 0 #fee5fc9a;
+    border: 1px solid #4e4e4e3f;
     color: #393939;
     font-size: 15px;
     padding: 8px 0;
@@ -82,7 +83,7 @@
 }
 
 .btn-create:hover {
-    background: none repeat scroll 0 0 #f9bce0;
+    background: none repeat scroll 0 0 #ffbef6;
     color: #393939;
 }
 
@@ -138,9 +139,9 @@ ul.backlog-nav li a span.label {
 }
 
 .backlog-head {
-    background: none repeat scroll 0 0 #ffb1df;
+    background: none repeat scroll 0 0 #fee5fc9a;
     /* add a gradiant to end in a softer pink */
-    background-image: linear-gradient(to right, #ffb1df, #ffe7f3);
+    background-image: linear-gradient(to right, #fee5fc9a, #d5d8df5c);
     color: #393939;
     height: 90px;
     padding: 20px;
@@ -157,6 +158,8 @@ ul.backlog-nav li a span.label {
 /* Table styling */
 .table-backlog {
     width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
 }
 
 .table-backlog td {
@@ -183,7 +186,8 @@ ul.backlog-nav li a span.label {
     padding-right: 10px;
 }
 
-.table-backlog tr td:hover {
+/* Only ticket rows get pointer; section headers do not */
+.table-backlog tr:not(.board-section) td:hover {
     cursor: pointer;
 }
 
@@ -203,19 +207,87 @@ ul.backlog-pagination li {
     float: left;
 }
 
-.board-section {
-    background: none repeat scroll 0 0 #ffe7f3;
+/* Board section: wrapper and header (header is outside the table) */
+.board-section-block {
+    margin-bottom: 20px;
+}
+
+.board-section-block:last-child {
+    margin-bottom: 0;
+}
+
+.board-section-header {
+    background: #fee5fc9a;
     color: #5e5e5e;
-    border-bottom: 1px solid #ffe7f3;
-    border-top: 1px solid #ffe7f3;
-    cursor: none;
+    border-radius: 10px;
+    padding: 10px 14px 12px;
+    cursor: default;
+    margin-bottom: 4px;
+}
+
+.board-section-header i {
+    margin-right: 8px;
+}
+
+/* Legacy table-row section (no longer used in Board view) */
+.board-section {
+    background: none repeat scroll 0 0 #d2dfff;
+    color: #5e5e5e;
+    border-bottom: 1px solid #d2dfff;
+    border-top: 1px solid #d2dfff;
+    cursor: default;
+}
+
+.board-section td {
+    border-radius: 10px;
+    padding: 10px 14px 12px;
+}
+
+/* Hover background for board ticket rows only (not section headers) */
+.table-backlog tr:not(.board-section):hover td {
+    background-color: #f0f4fc;
+}
+
+/* Ticket detail header: Back left, title next to it, other actions right (get remaining space) */
+.ticket-detail-header {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 10px;
+    gap: 12px;
+}
+
+.ticket-detail-left {
+    flex: 0 0 auto;
+}
+
+.ticket-detail-title {
+    flex: 0 0 auto;
+    margin: 0;
+    font-weight: 300;
+    font-size: 2.5rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 40%;
+}
+
+.ticket-detail-actions {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    min-width: 0;
 }
 
 /* Ticket Styling */
 .ticket-option {
-    display: inline-block;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
     margin-bottom: 10px;
     width: 100%;
+    justify-content: flex-end;
 }
 
 .ticket-option .btn-group a.btn {
@@ -233,25 +305,25 @@ ul.backlog-pagination li {
 
 .fileinput-button {
     background: none repeat scroll 0 0 #eeeeee;
-    border: 1px solid #ffe7f3;
+    border: 1px solid #e7f3ff;
 }
 
 .backlog-body .modal .modal-body input, .backlog-body .modal .modal-body textarea {
-    border: 1px solid #ffe7f3;
+    border: 1px solid #fee5fc9a;
     box-shadow: none;
 }
 
  .modal-content {
     border-radius: 16px;
-    background-color: #ffe7f3;
+    background-color: #dedfeb;
 }
 .modal-header {
-    background-color: #ffe7f3;
+    background-color: #dedfeb;
     border-radius: 16px;
     border: none;
 }
 .modal-body {
-    background-color: #ffe7f3;
+    background-color: #dedfeb;
     border-radius: 16px;
     border: none;
 }
@@ -267,7 +339,7 @@ ul.backlog-pagination li {
 }
 
 .heading-backlog h4 {
-    border-bottom: 1px solid #ffe7f3;
+    border-bottom: 1px solid #d2dfff;
     color: #444;
     font-size: 18px;
     margin-top: 20px;
@@ -357,7 +429,7 @@ ul.backlog-pagination li {
 }
 
 .linear-pill {
-    border: 1px solid #e4e4e7;
+    border: 1px solid #ffcefbf4;
     background: #fff;
     border-radius: 12px;
     padding: 10px 16px;
@@ -368,7 +440,7 @@ ul.backlog-pagination li {
 }
 
 .linear-pill:hover {
-    background: #f7f7f8;
+    background: #f8f7f8;
     border-color: #d7d7db;
 }
 
@@ -392,7 +464,7 @@ ul.backlog-pagination li {
 
 .linear-primary-btn {
     border: none;
-    background: #f3c4ec;
+    background: #fee5fc9a;
     color: #1f1f1f;
     font-weight: 600;
     font-size: 15px;
@@ -401,7 +473,7 @@ ul.backlog-pagination li {
 }
 
 .linear-primary-btn:hover {
-    background: #efb7e6;
+    background: #fee5fc9a;
 }
 
 /* create task dropdown styles */
@@ -411,23 +483,24 @@ ul.backlog-pagination li {
 }
 
 .linear-pill-select-btn {
-  border: 1px solid #f3b6de;
+  border: 1px solid #ffd2fb;
   background: #fff;
   color: #4a4a4a;
   border-radius: 16px;
   padding: 10px 16px;
-  min-width: 140px;
+  min-width: 100px;
   font-size: 14px;
   text-align: left;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  box-shadow: 0 0 0 3px rgba(255, 177, 223, 0.15);
 }
 
 .linear-pill-select-btn:focus {
   outline: none;
+    border-color: #feddfbf4;
+    box-shadow: 0 0 0 3px rgba(255, 212, 246, 0.3);
 }
 
 .linear-dropdown-arrow {
@@ -440,7 +513,7 @@ ul.backlog-pagination li {
   position: absolute;
   top: calc(100% + 8px);
   left: 0;
-  min-width: 220px;
+  min-width: 160px;
   background: #fff;
   border: 1px solid #e5e5e5;
   border-radius: 16px;
@@ -460,7 +533,7 @@ ul.backlog-pagination li {
 }
 
 .linear-dropdown-item:hover {
-  background: #fff4fb;
+  background: #f4dbee82;
 }
 
 .linear-dropdown-item.active {
@@ -476,4 +549,120 @@ ul.backlog-pagination li {
     font-size: 12px;
     color: #7a7a7a;
     margin-left: 8px;
+}
+
+/* Mark Done button: same pill style as dropdown, with success tint */
+.linear-mark-done-btn {
+  border: 1px solid #7bc67b;
+  background: #fff;
+  color: #2f2f2f;
+  border-radius: 16px;
+  padding: 10px 16px;
+  min-width: 140px;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.15s ease;
+}
+
+.linear-mark-done-btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(123, 198, 123, 0.2);
+}
+
+.linear-mark-done-btn:hover:not(:disabled) {
+  background: #f0f9f0;
+  border-color: #5cb85c;
+  box-shadow: 0 0 0 3px rgba(123, 198, 123, 0.3);
+}
+
+.linear-mark-done-btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  background: #f7f7f8;
+  border-color: #e4e4e7;
+  box-shadow: none;
+}
+
+/* Back button: same pill style as dropdown, with success tint */
+.back-btn {
+    border: 1px solid #ffcefbf4;
+    background: #fff;
+    color: #2f2f2f;
+    border-radius: 16px;
+    padding: 10px 14px;
+    width: 100px;
+    min-width: 100px;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.15s ease;
+}
+  
+.back-btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 212, 246, 0.3);
+}
+
+.back-btn:hover:not(:disabled) {
+    background: #ffeafb78;
+    border-color: #feddfbf4;
+    box-shadow: 0 0 0 3px rgba(255, 212, 246, 0.3);
+}
+
+.back-btn:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+    background: #f7f7f8;
+    border-color: #e4e4e7;
+    box-shadow: none;
+}
+
+  /* Back button: same pill style as dropdown, with success tint */
+.move-btn {
+    border: 1px solid #ffcefbf4;
+    background: #fff;
+    color: #2f2f2f;
+    border-radius: 16px;
+    padding: 10px 14px;
+    width: 160px;
+    min-width: 100px;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.15s ease;
+}
+  
+.move-btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 212, 246, 0.3);
+}
+  
+.move-btn:hover:not(:disabled) {
+     background: #ffeafb78;
+    border-color: #feddfbf4;
+    box-shadow: 0 0 0 3px rgba(255, 212, 246, 0.3);
+}
+  
+.move-btn:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+    background: #f7f7f8;
+    border-color: #e4e4e7;
+    box-shadow: none;
 }

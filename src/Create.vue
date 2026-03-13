@@ -126,8 +126,8 @@
                         content: `<p>${this.ticket.content}</p>`,
                         isImportant: false,
                         isDone: isDone,
-                        inProgress: type === 'active',
                         onDeck: type === 'active',
+                        inProgress: false,
                         qaTesting: false,
                         type: type,
                         date: moment(),
@@ -137,6 +137,16 @@
 
                 this.ticket.title = '';
                 this.ticket.content = '';
+                this.closeModal();
+            },
+            /** Close the create modal (Bootstrap). */
+            closeModal() {
+                this.$nextTick(() => {
+                    const el = document.getElementById('createModal');
+                    if (el && typeof window.$ !== 'undefined') {
+                        window.$(el).modal('hide');
+                    }
+                });
             },
             /** Toggle the destination dropdown open/closed. */
             toggleDropdown() {

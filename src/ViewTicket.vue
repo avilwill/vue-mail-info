@@ -5,23 +5,23 @@
 -->
 <template>
     <div class="backlog-body">
-        <div class="ticket-option">
-            <button class="btn btn-primary" @click="navigateBack">
-                <i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp; Back
-            </button>
-            <!-- Action bar: change status (done, board, backlog, in progress) -->
-            <button class="btn btn-success" @click="markDone" :disabled="data.ticket.isDone">
-                <i class="fa fa-check-square-o"></i>&nbsp; {{ data.ticket.isDone ? 'Done' : 'Mark as Done' }}
-            </button>
-            <button v-if="data.ticket.type === 'backlog'" class="btn btn-primary" @click="moveToBoard">
-                    <i class="fa fa-cube" aria-hidden="true"></i>&nbsp; Move to Board
-            </button>
-            <button v-if="data.ticket.type === 'active'" class="btn btn-primary" @click="moveToBacklog">
-                    <i class="fa fa-inbox" aria-hidden="true"></i>&nbsp; Move to Backlog
-            </button>
-            <button v-if="data.ticket.type === 'active'" class="btn btn-primary" @click="moveToInProgress">
-                    <i class="" aria-hidden="true"></i>&nbsp; Move to In Progress
-            </button>
+        <div class="ticket-detail-header">
+            <div class="ticket-detail-left">
+                <button type="button" class="back-btn" @click="navigateBack">
+                    <i class="fa fa-arrow-left"></i>
+                    Back
+                </button>
+            </div>
+            <h2 class="ticket-detail-title">{{ data.ticket.title }}</h2>
+            <div class="ticket-detail-actions">
+                <app-actions
+                    :ticket="data.ticket"
+                    :hide-back-button="true"
+                    @mark-done="markDone"
+                    @move-type="onMoveType"
+                    @select-stage="onSelectStage"
+                />
+            </div>
         </div>
 
         <hr>
@@ -41,10 +41,11 @@
 
 <script>
     import { eventBus } from './main';
+    import Actions from './Actions.vue';
 
     /**
      * ViewTicket: single-ticket detail shown when user clicks a ticket in the list.
-     * Receives data.ticket from Content. Actions emit updateTicket (App handles API);
+     * Receives data.ticket from Content. Uses Actions for toolbar; emits updateTicket (App handles API);
      * Back uses parent's previousView to switch Content back to the prior view.
      */
     export default {
@@ -55,11 +56,17 @@
                 required: true
             },
         },
+        components: {
+            appActions: Actions
+        },
         /** When view is re-activated (keep-alive), ensure inProgress is set for button state. */
         activated() {
             if (typeof this.data.ticket.inProgress !== 'undefined') {
                 this.data.ticket.inProgress = true;
             }
+        },
+        created() {
+           console.log('ViewTicket created with ticket:', this.data.ticket);
         },
         methods: {
             /** Return to the previous view (list); uses Content's previousView. */
@@ -85,33 +92,35 @@
                     localTicket: this.data.ticket
                 });
             },
-            /** Move ticket to board (type active); persist via App. */
-            moveToBoard() {
-                this.data.ticket.type = 'active';
+            /** Move ticket to Board or Backlog; persist via App's updateTicket. When moving to board, set onDeck so it appears in On Deck. */
+            onMoveType(newType) {
+                const updates = { type: newType };
+                if (newType === 'active') {
+                    updates.onDeck = true;
+                    updates.inProgress = false;
+                    updates.qaTesting = false;
+                    this.data.ticket.onDeck = true;
+                    this.data.ticket.inProgress = false;
+                    this.data.ticket.qaTesting = false;
+                }
+                this.data.ticket.type = newType;
                 eventBus.$emit('updateTicket', {
                     id: this.data.ticket.id,
-                    updates: { type: 'active' },
+                    updates,
                     localTicket: this.data.ticket
                 });
             },
-            /** Move ticket to backlog; persist via App. */
-            moveToBacklog() {
-                this.data.ticket.type = 'backlog';
+            /** Apply stage selection: only the selected flag is true; others false. Persist via App's updateTicket. */
+            onSelectStage(updates) {
+                this.data.ticket.onDeck = updates.onDeck === true;
+                this.data.ticket.inProgress = updates.inProgress === true;
+                this.data.ticket.qaTesting = updates.qaTesting === true;
                 eventBus.$emit('updateTicket', {
                     id: this.data.ticket.id,
-                    updates: { type: 'backlog' },
+                    updates,
                     localTicket: this.data.ticket
                 });
             },
-            /** Move ticket to In Progress (board); persist via App. */
-            moveToInProgress() {
-                this.data.ticket.type = 'inProgress';
-                eventBus.$emit('updateTicket', {
-                    id: this.data.ticket.id,
-                    updates: { type: 'inProgress' },
-                    localTicket: this.data.ticket
-                });
-            }
         },
         filters: {
             /** Format byte count as human-readable string (e.g. "1.5 MB"). */

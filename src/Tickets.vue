@@ -4,11 +4,12 @@
     star toggles important (Board only). Empty state: "No tickets here yet."
 -->
 <template>
-    <!-- List view: one table for backlog, done, or important-type tickets -->
-    <table
-        v-if="tickets.length > 0 && tickets.some(t => ['backlog', 'done', 'important'].includes(t.type))"
-        class="table table-backlog table-hover"
-    >
+    <div>
+        <!-- List view: one table for backlog, done, or important-type tickets -->
+        <table
+            v-if="tickets.length > 0 && tickets.some(t => ['backlog', 'done', 'important'].includes(t.type))"
+            class="table table-backlog table-hover"
+        >
         <tbody>
             <tr
                 v-for="ticket in tickets.filter(t => ['backlog', 'done', 'important'].includes(t.type))"
@@ -31,90 +32,101 @@
                 </td>
             </tr>
         </tbody>
-    </table>
-    <!-- Board view: active tickets in sections On Deck, In Progress, QA Testing -->
-    <table
-        v-else-if="tickets.length > 0"
-        class="table table-backlog"
-    >
-        <tbody>
-            <template v-if="tickets.some(t => t.type === 'active' && t.onDeck)">
-                <tr class="board-section">
-                    <td colspan="5"><i class="fa fa-hourglass-start"></i> <span>&nbsp;&nbsp;On Deck</span></td>
-                </tr>
-                <tr
-                    v-for="ticket in tickets.filter(t => t.type === 'active' && t.onDeck)"
-                    :key="'onDeck-' + ticket.code"
-                    @click="openTicket(ticket)"
-                >
-                    <td><input type="checkbox"></td>
-                    <td>{{ ticket.code }}</td>
-                    <td>{{ ticket.title }}</td>
-                    <td><i v-if="ticket.attachments.length > 0" class="fa fa-paperclip"></i></td>
-                    <td class="text-right ticket-meta">
-                        <span class="ticket-date">{{ ticket.date.fromNow() }}</span>
-                        <a
-                            href="#"
-                            @click.prevent.stop="toggleImportant(ticket)"
-                        >
-                            <i :class="['fa','fa-star',{ important: ticket.isImportant }]"></i>
-                        </a>
-                    </td>
-                </tr>
-            </template>
+        </table>
+        <!-- Board view: each section is its own block (header div + table of tickets) -->
+        <template v-else-if="tickets.length > 0">
+        <div
+            v-if="tickets.some(t => t.type === 'active' && t.onDeck)"
+            class="board-section-block"
+        >
+            <div class="board-section-header">
+                <i class="fa fa-hourglass-start"></i>
+                <span>On Deck</span>
+            </div>
+            <table class="table table-backlog">
+                <tbody>
+                    <tr
+                        v-for="ticket in tickets.filter(t => t.type === 'active' && t.onDeck)"
+                        :key="'onDeck-' + ticket.code"
+                        @click="openTicket(ticket)"
+                    >
+                        <td><input type="checkbox"></td>
+                        <td>{{ ticket.code }}</td>
+                        <td>{{ ticket.title }}</td>
+                        <td><i v-if="ticket.attachments.length > 0" class="fa fa-paperclip"></i></td>
+                        <td class="text-right ticket-meta">
+                            <span class="ticket-date">{{ ticket.date.fromNow() }}</span>
+                            <a href="#" @click.prevent.stop="toggleImportant(ticket)">
+                                <i :class="['fa','fa-star',{ important: ticket.isImportant }]"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
-            <template v-if="tickets.some(t => t.type === 'active' && t.inProgress)">
-                <tr class="board-section">
-                    <td colspan="5"><i class="fa fa-hourglass-2"></i> <span>&nbsp;&nbsp;In Progress</span></td>
-                </tr>
-                <tr
-                    v-for="ticket in tickets.filter(t => t.type === 'active' && t.inProgress)"
-                    :key="'inProgress-' + ticket.code"
-                    @click="openTicket(ticket)"
-                >
-                    <td><input type="checkbox"></td>
-                    <td>{{ ticket.code }}</td>
-                    <td>{{ ticket.title }}</td>
-                    <td><i v-if="ticket.attachments.length > 0" class="fa fa-paperclip"></i></td>
-                    <td class="text-right ticket-meta">
-                        <span class="ticket-date">{{ ticket.date.fromNow() }}</span>
-                        <a
-                            href="#"
-                            @click.prevent.stop="toggleImportant(ticket)"
-                        >
-                            <i :class="['fa','fa-star',{ important: ticket.isImportant }]"></i>
-                        </a>
-                    </td>
-                </tr>
-            </template>
+        <div
+            v-if="tickets.some(t => t.type === 'active' && t.inProgress)"
+            class="board-section-block"
+        >
+            <div class="board-section-header">
+                <i class="fa fa-hourglass-2"></i>
+                <span>In Progress</span>
+            </div>
+            <table class="table table-backlog">
+                <tbody>
+                    <tr
+                        v-for="ticket in tickets.filter(t => t.type === 'active' && t.inProgress)"
+                        :key="'inProgress-' + ticket.code"
+                        @click="openTicket(ticket)"
+                    >
+                        <td><input type="checkbox"></td>
+                        <td>{{ ticket.code }}</td>
+                        <td>{{ ticket.title }}</td>
+                        <td><i v-if="ticket.attachments.length > 0" class="fa fa-paperclip"></i></td>
+                        <td class="text-right ticket-meta">
+                            <span class="ticket-date">{{ ticket.date.fromNow() }}</span>
+                            <a href="#" @click.prevent.stop="toggleImportant(ticket)">
+                                <i :class="['fa','fa-star',{ important: ticket.isImportant }]"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
-            <template v-if="tickets.some(t => t.type === 'active' && t.qaTesting)">
-                <tr class="board-section">
-                    <td colspan="8"><i class="fa fa-hourglass-end"></i> <span>&nbsp;&nbsp;QA Testing</span></td>
-                </tr>
-                <tr
-                    v-for="ticket in tickets.filter(t => t.type === 'active' && t.qaTesting)"
-                    :key="'qaTesting-' + ticket.code"
-                    @click="openTicket(ticket)"
-                >
-                    <td><input type="checkbox"></td>
-                    <td>{{ ticket.code }}</td>
-                    <td>{{ ticket.title }}</td>
-                    <td><i v-if="ticket.attachments.length > 0" class="fa fa-paperclip"></i></td>
-                    <td class="text-right ticket-meta">
-                        <span class="ticket-date">{{ ticket.date.fromNow() }}</span>
-                        <a
-                            href="#"
-                            @click.prevent.stop="toggleImportant(ticket)"
-                        >
-                            <i :class="['fa','fa-star',{ important: ticket.isImportant }]"></i>
-                        </a>
-                    </td>
-                </tr>
-            </template>
-        </tbody>
-    </table>
-    <p v-else>No tickets here yet.</p>
+        <div
+            v-if="tickets.some(t => t.type === 'active' && t.qaTesting)"
+            class="board-section-block"
+        >
+            <div class="board-section-header">
+                <i class="fa fa-hourglass-end"></i>
+                <span>QA Testing</span>
+            </div>
+            <table class="table table-backlog">
+                <tbody>
+                    <tr
+                        v-for="ticket in tickets.filter(t => t.type === 'active' && t.qaTesting)"
+                        :key="'qaTesting-' + ticket.code"
+                        @click="openTicket(ticket)"
+                    >
+                        <td><input type="checkbox"></td>
+                        <td>{{ ticket.code }}</td>
+                        <td>{{ ticket.title }}</td>
+                        <td><i v-if="ticket.attachments.length > 0" class="fa fa-paperclip"></i></td>
+                        <td class="text-right ticket-meta">
+                            <span class="ticket-date">{{ ticket.date.fromNow() }}</span>
+                            <a href="#" @click.prevent.stop="toggleImportant(ticket)">
+                                <i :class="['fa','fa-star',{ important: ticket.isImportant }]"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        </template>
+        <p v-else>No tickets here yet.</p>
+    </div>
 </template>
 <script>
     import { eventBus } from './main';

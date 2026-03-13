@@ -7,7 +7,10 @@
 -->
 <template>
     <aside class="lg-side">
-        <div class="backlog-head">
+        <div
+            v-if="currentView.tag !== 'app-view-ticket'"
+            class="backlog-head"
+        >
             <h3>{{ currentView.title }}</h3>
         </div>
 
