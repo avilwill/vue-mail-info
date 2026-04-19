@@ -1,3 +1,5 @@
+// This file contains randomly generated ticket data for testing and demonstration purposes.
+// Each ticket has a title, content, status flags, type, date, and optional attachments.
 import moment from 'moment';
 
 export default [
@@ -9,7 +11,7 @@ export default [
             <p>You recently completed a purchase, and we'd like to know how we did. Your feedback is very important to us!</p>
             <p>Please click the following link to complete the survey. We're not going to lie, it will take way more than 5 minutes.</p>
         `,
-        isImportant: false,
+        isPriority: false,
         isDone: false,
         inProgress: false,
         onDeck: false,
@@ -29,7 +31,7 @@ export default [
             <p>Good luck with that!</p>
             <p><strong>Google Security Team</strong></p>
         `,
-        isImportant: false,
+        isPriority: false,
         isDone: false,
         inProgress: false,
         onDeck: false,
@@ -45,7 +47,7 @@ export default [
             <p>This is just to notify you that someone (hopefully you) has reset your Facebook password.</p>
             <p>The Facebook Team</p>
         `,
-        isImportant: true,
+        isPriority: true,
         isDone: false,
         inProgress: false,
         onDeck: false,
@@ -62,7 +64,7 @@ export default [
             <p>You will find your reservation details attached to this message.</p>
             <p>We hope that you enjoy your stay!</p>
         `,
-        isImportant: true,
+        isPriority: true,
         isDone: false,
         inProgress: false,
         onDeck: false,
@@ -82,7 +84,7 @@ export default [
             <p>Hey, want to grab a cup of coffee soon?</p>
             <p>Let me know if you get this, because who really uses e-mail these days?</p>
         `,
-        isImportant: false,
+        isPriority: false,
         inProgress: false,
         onDeck: true,
         qaTesting: false,
@@ -98,7 +100,7 @@ export default [
             <p>We have received your payment, and your products are on the way!</p>
             <p>Order ID: ABCD1234</p>
         `,
-        isImportant: false,
+        isPriority: false,
         isDone: false,
         inProgress: false,
         onDeck: false,
@@ -121,7 +123,7 @@ export default [
             <p>Hope you made it!</p>
             <p><strong>The Skype Team</strong></p>
         `,
-        isImportant: true,
+        isPriority: true,
         isDone: false,
         inProgress: false,
         onDeck: false,
@@ -138,7 +140,7 @@ export default [
             <p>Oh, by the way, you are visitor number 1,000,000,000 on some unknown website, so you just won one billion dollars. True story, just click the link now!</p>
             <p><a href="#we-want-to-steal-your-password">Click Here Now</a></p>
         `,
-        isImportant: false,
+        isPriority: false,
         isDone: true,
         inProgress: false,
         onDeck: false,
@@ -156,7 +158,7 @@ export default [
             <p>Best regards,</p>
             <p>Bo Andersen</p>
         `,
-        isImportant: false,
+        isPriority: false,
         inProgress: true,
         onDeck: false,
         qaTesting: false,
@@ -173,7 +175,7 @@ export default [
             <p>Even though I know it's extremely annoying, I'm just going to ask "how much?"</p>
             <p>Let me know!</p>
         `,
-        isImportant: false,
+        isPriority: false,
         inProgress: true,
         onDeck: false,
         qaTesting: false,
@@ -189,7 +191,7 @@ export default [
             <p>Perhaps you thought you paid a lot of taxes, living in the world's most expensive country. But no, we have a little surprise for you.</p>
             <p>Can't wait to see you there!</p>
         `,
-        isImportant: false,
+        isPriority: false,
         isDone: true,
         inProgress: false,
         onDeck: false,
@@ -213,7 +215,7 @@ export default [
             <p>Regards,</p>
             <p>An Angry Customer</p>
         `,
-        isImportant: false,
+        isPriority: false,
         inProgress: false,
         onDeck: false,
         qaTesting: true,
@@ -232,7 +234,7 @@ export default [
             <p>Best regards,</p>
             <p>A random recruiter</p>
         `,
-        isImportant: false,
+        isPriority: false,
         isDone: false,
         inProgress: false,
         onDeck: false,
@@ -253,7 +255,7 @@ export default [
             <p>Your video titled "Why Vue.js is Awesome" is now live on YouTube!</p>
             <p>You can find it here: <a href="#">https://youtu.be/watch?v=hg23hgls</a></p>
         `,
-        isImportant: false,
+        isPriority: false,
         isDone: false,
         inProgress: false,
         onDeck: false,
@@ -277,7 +279,7 @@ export default [
             <p>You should probably check that out. Just sayin'.</p>
             <p><strong>The Slack Team</strong></p>
         `,
-        isImportant: false,
+        isPriority: false,
         isDone: false,
         inProgress: false,
         onDeck: false,
@@ -295,7 +297,7 @@ export default [
                 <li>Cloud Cloudlifter CL-1 ($199)</li>
             </ul>
         `,
-        isImportant: false,
+        isPriority: false,
         isDone: false,
         inProgress: false,
         onDeck: false,

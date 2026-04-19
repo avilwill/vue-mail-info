@@ -1,3 +1,5 @@
+// This file contains randomly generated ticket data for testing and demonstration purposes.
+// Each ticket has a title, content, status flags, type, date, and optional attachments.
 import moment from 'moment';
 
 export default [
@@ -10,7 +12,7 @@ export default [
             <p><a href="#">Confirm Subscription</a></p>
             <p>Thanks again!</p>
         `,
-        isImportant: false,
+        isPriority: false,
         isDone: false,
         inProgress: true,
         onDeck: false,
@@ -30,7 +32,7 @@ export default [
             </ul>
             <p>Try to pay more attention next time.</p>
         `,
-        isImportant: false,
+        isPriority: false,
         isDone: false,
         inProgress: true,
         onDeck: false,
@@ -46,7 +48,7 @@ export default [
             <p>Let me know what you think. Hope you like it!</p>
             <p>Sarah</p>
         `,
-        isImportant: false,
+        isPriority: false,
         isDone: false,
         inProgress: true,
         onDeck: false,

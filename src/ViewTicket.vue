@@ -1,26 +1,31 @@
+<!--
+    Ticket detail view: Back button, action bar (Edit, Mark Done, Move to Board/Backlog),
+    HTML content, and optional attachments list. Actions emit updateTicket; Back uses
+    Content's previousView to return to the list.
+-->
 <template>
     <div class="backlog-body">
-        <div class="ticket-option">
-            <button class="btn btn-primary" @click="navigateBack">
-                <i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp; Back
-            </button>
-
-            <button class="btn btn-success" @click="data.ticket.isDone = true" :disabled="data.ticket.isDone">
-                <i class="fa fa-check-square-o"></i>&nbsp; {{ data.ticket.isDone ? 'Done' : 'Mark as Done' }}
-            </button>
-
-            <button v-if="data.ticket.type === 'backlog'" class="btn btn-primary" @click="data.ticket.type = 'active'">
-                    <i class="fa fa-cube" aria-hidden="true"></i>&nbsp; Move to Board
-            </button>
-
-            <button v-if="data.ticket.type === 'active'" class="btn btn-primary" @click="data.ticket.type = 'backlog'">
-                    <i class="fa fa-inbox" aria-hidden="true"></i>&nbsp; Move to Backlog
-            </button>
+        <div class="ticket-detail-header">
+            <div class="ticket-detail-left">
+                <button type="button" class="back-btn" @click="navigateBack">
+                    <i class="fa fa-arrow-left"></i>
+                    Back
+                </button>
+            </div>
+            <h2 class="ticket-detail-title">{{ data.ticket.title }}</h2>
+            <div class="ticket-detail-actions">
+                <app-actions
+                    :ticket="data.ticket"
+                    :hide-back-button="true"
+                    @mark-done="markDone"
+                    @edit="openEditModal"
+                    @move-type="onMoveType"
+                    @select-stage="onSelectStage"
+                />
+            </div>
         </div>
 
-        <p><strong>Date:</strong> {{ data.ticket.date.fromNow() }}</p>
         <hr>
-
         <div v-html="data.ticket.content" class="ticket"></div>
 
         <div v-if="data.ticket.attachments.length > 0" class="attachments">
@@ -37,41 +42,100 @@
 
 <script>
     import { eventBus } from './main';
+    import Actions from './Actions.vue';
 
+    /**
+     * ViewTicket: single-ticket detail shown when user clicks a ticket in the list.
+     * Receives data.ticket from Content. Uses Actions for toolbar; emits updateTicket (App handles API);
+     * Back uses parent's previousView to switch Content back to the prior view.
+     */
     export default {
         props: {
+            /** { ticket } — ticket object passed from Content when opening detail. */
             data: {
                 type: Object,
                 required: true
             },
         },
+        components: {
+            appActions: Actions
+        },
+        /** When view is re-activated (keep-alive), ensure inProgress is set for button state. */
         activated() {
             if (typeof this.data.ticket.inProgress !== 'undefined') {
                 this.data.ticket.inProgress = true;
             }
         },
         methods: {
+            /** Open sidebar create modal prefilled for this ticket (Create listens on eventBus). */
+            openEditModal() {
+                eventBus.$emit('openCreateModal', { ticket: this.data.ticket });
+            },
+            /** Return to the previous view (list); uses Content's previousView. */
             navigateBack() {
-                let previousView = this.$parent.previousView;
+                const previousView = this.$parent.previousView;
 
                 eventBus.$emit('changeView', {
                     tag: previousView.tag,
                     title: previousView.title,
                     data: previousView.data
                 });
-            }
+            },
+            /** Set ticket as done and persist via App's updateTicket. */
+            markDone() {
+                if (this.data.ticket.isDone) {
+                    return;
+                }
+
+                this.data.ticket.isDone = true;
+                eventBus.$emit('updateTicket', {
+                    id: this.data.ticket.id,
+                    updates: { isDone: true },
+                    localTicket: this.data.ticket
+                });
+            },
+            /** Move ticket to Board or Backlog; persist via App's updateTicket. When moving to board, set onDeck so it appears in On Deck. */
+            onMoveType(newType) {
+                const updates = { type: newType };
+                if (newType === 'active') {
+                    updates.onDeck = true;
+                    updates.inProgress = false;
+                    updates.qaTesting = false;
+                    this.data.ticket.onDeck = true;
+                    this.data.ticket.inProgress = false;
+                    this.data.ticket.qaTesting = false;
+                }
+                this.data.ticket.type = newType;
+                eventBus.$emit('updateTicket', {
+                    id: this.data.ticket.id,
+                    updates,
+                    localTicket: this.data.ticket
+                });
+            },
+            /** Apply stage selection: only the selected flag is true; others false. Persist via App's updateTicket. */
+            onSelectStage(updates) {
+                this.data.ticket.onDeck = updates.onDeck === true;
+                this.data.ticket.inProgress = updates.inProgress === true;
+                this.data.ticket.qaTesting = updates.qaTesting === true;
+                eventBus.$emit('updateTicket', {
+                    id: this.data.ticket.id,
+                    updates,
+                    localTicket: this.data.ticket
+                });
+            },
         },
         filters: {
+            /** Format byte count as human-readable string (e.g. "1.5 MB"). */
             formatBytes(bytes) {
                 if (bytes == 0) {
                     return '0 Bytes';
                 }
 
-                let decimals = 2;
-                let k = 1000;
-                let dm = decimals + 1 || 3;
-                let sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
-                let i = Math.floor(Math.log(bytes) / Math.log(k));
+                const decimals = 2;
+                const k = 1000;
+                const dm = decimals + 1 || 3;
+                const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+                const i = Math.floor(Math.log(bytes) / Math.log(k));
 
                 return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
             }
