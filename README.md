@@ -73,7 +73,8 @@ I simplified and organized the codebase so responsibilities are obvious:
 - Node.js, Express
 - SQLite (ticket persistence via `sqlite` / `sqlite3`)
 
-Code Review: https://vimeo.com/1184589428/cb22762798
+## Code Review: 
+https://vimeo.com/1184589428/cb22762798
 
 ## Getting up and Running
 
