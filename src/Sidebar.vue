@@ -1,5 +1,5 @@
 <!--
-    Sidebar: app branding, Create button, and nav links for Board, Backlog, Important, Done.
+    Sidebar: app branding, Create button, and nav links for Board, Backlog, Priority, Done.
     Each link shows a count; clicking emits changeView so Content switches the main panel.
 -->
 <template>
@@ -32,9 +32,9 @@
                 </a>
             </li>
 
-            <li :class="{ active: activeView == 'app-important' }">
-                <a href="#" @click.prevent="navigate('app-important', 'Important')">
-                    <i class="fa fa-exclamation-triangle"></i>Important <span class="label label-danger pull-right">{{ importantTickets.length }}</span>
+            <li :class="{ active: activeView == 'app-priority' }">
+                <a href="#" @click.prevent="navigate('app-priority', 'Priority')">
+                    <i class="fa fa-exclamation-triangle"></i>Priority <span class="label label-danger pull-right">{{ priorityTickets.length }}</span>
                 </a>
             </li>
 
@@ -53,7 +53,7 @@
 
     /**
      * Sidebar: navigation and create action. Receives tickets from App, derives
-     * counts per view (Board, Backlog, Important, Done), and syncs activeView
+     * counts per view (Board, Backlog, Priority, Done), and syncs activeView
      * with Content via changeView events.
      */
     export default {
@@ -97,10 +97,11 @@
                     return (ticket.type == 'active' && !ticket.isDone);
                 });
             },
-            /** Backlog tickets marked important and not done (for Important nav count). */
-            importantTickets() {
+            /** Backlog or board tickets marked priority and not done (for Priority nav count). */
+            priorityTickets() {
                 return this.tickets.filter(function(ticket) {
-                    return (ticket.type == 'backlog' && ticket.isImportant === true && !ticket.isDone);
+                    const onList = ticket.type == 'backlog' || ticket.type == 'active';
+                    return onList && ticket.isPriority === true && !ticket.isDone;
                 });
             },
             /** Completed tickets (for Done nav count). */

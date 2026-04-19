@@ -32,7 +32,7 @@ const normalizeTicket = (row) => {
     code: row.code,
     title: row.title,
     content: row.content,
-    isImportant: Boolean(row.isImportant),
+    isPriority: Boolean(row.isPriority ?? row.isImportant),
     isDone: Boolean(row.isDone),
     inProgress: Boolean(row.inProgress),
     onDeck: Boolean(row.onDeck),
@@ -49,7 +49,7 @@ const buildTicketPayload = (payload = {}) => {
     code: payload.code || null,
     title: payload.title || 'Untitled',
     content: payload.content || '',
-    isImportant: payload.isImportant ? 1 : 0,
+    isPriority: payload.isPriority === true || payload.isPriority === 1 ? 1 : 0,
     isDone: payload.isDone ? 1 : 0,
     inProgress: payload.inProgress ? 1 : 0,
     onDeck: payload.onDeck ? 1 : 0,
@@ -69,7 +69,7 @@ const createTicket = async (payload) => {
       code,
       title,
       content,
-      isImportant,
+      isPriority,
       isDone,
       inProgress,
       onDeck,
@@ -82,7 +82,7 @@ const createTicket = async (payload) => {
       ticket.code,
       ticket.title,
       ticket.content,
-      ticket.isImportant,
+      ticket.isPriority,
       ticket.isDone,
       ticket.inProgress,
       ticket.onDeck,
@@ -125,7 +125,7 @@ const updateTicket = async (id, payload, allowPartial) => {
       code = ?,
       title = ?,
       content = ?,
-      isImportant = ?,
+      isPriority = ?,
       isDone = ?,
       inProgress = ?,
       onDeck = ?,
@@ -138,7 +138,7 @@ const updateTicket = async (id, payload, allowPartial) => {
       ticket.code,
       ticket.title,
       ticket.content,
-      ticket.isImportant,
+      ticket.isPriority,
       ticket.isDone,
       ticket.inProgress,
       ticket.onDeck,
@@ -178,7 +178,7 @@ const initDb = async () => {
     code TEXT,
     title TEXT NOT NULL,
     content TEXT,
-    isImportant INTEGER DEFAULT 0,
+    isPriority INTEGER DEFAULT 0,
     isDone INTEGER DEFAULT 0,
     inProgress INTEGER DEFAULT 0,
     onDeck INTEGER DEFAULT 0,
@@ -187,6 +187,13 @@ const initDb = async () => {
     date TEXT,
     attachments TEXT
   )`);
+
+  const columns = await db.all('PRAGMA table_info(tickets)');
+  const hasOldPriority = columns.some((c) => c.name === 'isImportant');
+  const hasNewPriority = columns.some((c) => c.name === 'isPriority');
+  if (hasOldPriority && !hasNewPriority) {
+    await db.exec('ALTER TABLE tickets RENAME COLUMN isImportant TO isPriority');
+  }
 
   const row = await db.get('SELECT COUNT(*) as count FROM tickets');
   if (row.count === 0) {

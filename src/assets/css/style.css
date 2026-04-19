@@ -71,6 +71,19 @@
     padding: 20px 20px 20px 20px;
 }
 
+/* Multiselect toolbar: same header + pill buttons as single-ticket ViewTicket / Actions */
+.tickets-bulk-header .tickets-bulk-count {
+    font-size: 18px;
+    font-weight: 500;
+    color: #2f2f2f;
+}
+
+.tickets-bulk-header .ticket-option .back-btn,
+.tickets-bulk-header .ticket-option .move-btn {
+    width: auto;
+    min-width: 100px;
+}
+
 /* Buttons */
 .btn-create {
     background: none repeat scroll 0 0 #fee5fc9a;
@@ -191,7 +204,7 @@ ul.backlog-nav li a span.label {
     cursor: pointer;
 }
 
-.table-backlog tr td .fa-star.important, .table-backlog tr td .fa-star:hover {
+.table-backlog tr td .fa-star.priority, .table-backlog tr td .fa-star:hover {
     color: #f78a09;
 }
 
@@ -587,6 +600,41 @@ ul.backlog-pagination li {
   background: #f7f7f8;
   border-color: #e4e4e7;
   box-shadow: none;
+}
+
+/* Delete (bulk Done tab): pill style aligned with Mark as Done, destructive tint */
+.linear-delete-btn {
+  border: 1px solid #d9534f;
+  background: #fff;
+  color: #2f2f2f;
+  border-radius: 16px;
+  padding: 10px 16px;
+  min-width: 120px;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.15s ease;
+}
+
+.linear-delete-btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(217, 83, 79, 0.22);
+}
+
+.linear-delete-btn:hover {
+  background: #fcf4f4;
+  border-color: #c9302c;
+  box-shadow: 0 0 0 3px rgba(217, 83, 79, 0.28);
+}
+
+.tickets-bulk-header .ticket-option .linear-delete-btn {
+  width: auto;
+  min-width: 100px;
 }
 
 /* Back button: same pill style as dropdown, with success tint */

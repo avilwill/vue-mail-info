@@ -1,5 +1,5 @@
 <!--
-    Ticket detail view: Back button, action bar (Mark Done, Move to Board/Backlog),
+    Ticket detail view: Back button, action bar (Edit, Mark Done, Move to Board/Backlog),
     HTML content, and optional attachments list. Actions emit updateTicket; Back uses
     Content's previousView to return to the list.
 -->
@@ -18,6 +18,7 @@
                     :ticket="data.ticket"
                     :hide-back-button="true"
                     @mark-done="markDone"
+                    @edit="openEditModal"
                     @move-type="onMoveType"
                     @select-stage="onSelectStage"
                 />
@@ -65,10 +66,11 @@
                 this.data.ticket.inProgress = true;
             }
         },
-        created() {
-           console.log('ViewTicket created with ticket:', this.data.ticket);
-        },
         methods: {
+            /** Open sidebar create modal prefilled for this ticket (Create listens on eventBus). */
+            openEditModal() {
+                eventBus.$emit('openCreateModal', { ticket: this.data.ticket });
+            },
             /** Return to the previous view (list); uses Content's previousView. */
             navigateBack() {
                 const previousView = this.$parent.previousView;

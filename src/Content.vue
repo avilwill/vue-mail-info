@@ -24,12 +24,12 @@
     import { eventBus } from './main';
     import BackLog from './BackLog.vue';
     import Board from './Board.vue';
-    import Important from './Important.vue';
+    import Priority from './Priority.vue';
     import Done from './Done.vue';
     import ViewTicket from './ViewTicket.vue';
 
     /**
-     * Content: main panel that shows the current view (Board, Backlog, Important,
+     * Content: main panel that shows the current view (Board, Backlog, Priority,
      * Done, or a single ticket). Maintains a view history so "Back" can return
      * to the previous view. List views receive tickets from the parent; ViewTicket
      * receives a ticket in data.
@@ -82,7 +82,7 @@
         components: {
             appBacklog: BackLog,
             appBoard: Board,
-            appImportant: Important,
+            appPriority: Priority,
             appDone: Done,
             appViewTicket: ViewTicket
         }

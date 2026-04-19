@@ -4,7 +4,11 @@
 -->
 <template>
     <div class="backlog-body">
-        <app-tickets :tickets="completedTickets"></app-tickets>
+        <app-tickets
+            :tickets="completedTickets"
+            layout="list"
+            bulk-context="done"
+        ></app-tickets>
     </div>
 </template>
 

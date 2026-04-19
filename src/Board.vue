@@ -4,7 +4,7 @@
 -->
 <template>
     <div class="backlog-body">
-        <app-tickets :tickets="activeTickets"></app-tickets>
+        <app-tickets :tickets="activeTickets" layout="board"></app-tickets>
     </div>
 </template>
 

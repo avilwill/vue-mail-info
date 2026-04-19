@@ -15,7 +15,7 @@
     import Content from './Content.vue';
     import randomTickets from './data/random-tickets';
     import moment from 'moment';
-    import { fetchTickets, createTicket, updateTicket } from './api/tickets';
+    import { fetchTickets, createTicket, updateTicket, deleteTicket } from './api/tickets';
     import { eventBus } from './main';
 
     /**
@@ -44,6 +44,14 @@
             eventBus.$on('updateTicket', (data) => {
                 this.handleUpdateTicket(data.id, data.updates, data.localTicket);
             });
+
+            eventBus.$on('bulkUpdateTickets', (payload) => {
+                this.handleBulkUpdateTickets(payload);
+            });
+
+            eventBus.$on('bulkDeleteTickets', (payload) => {
+                this.handleBulkDeleteTickets(payload);
+            });
         },
         methods: {
             /** Load all tickets from the API and set tickets (with normalized date/attachments). */
@@ -56,7 +64,8 @@
             normalizeTicket(ticket) {
                 return Object.assign({}, ticket, {
                     date: ticket.date ? moment(ticket.date) : moment(),
-                    attachments: Array.isArray(ticket.attachments) ? ticket.attachments : []
+                    attachments: Array.isArray(ticket.attachments) ? ticket.attachments : [],
+                    isPriority: Boolean(ticket.isPriority)
                 });
             },
             /** Convert date-like value to an ISO string for the API. */
@@ -106,11 +115,77 @@
                         date: this.formatDate(updates.date || localTicket.date)
                     })
                 ).then(updated => {
-                    const index = this.tickets.findIndex(ticket => ticket.id === id);
+                    const index = this.tickets.findIndex(
+                        (ticket) => Number(ticket.id) === Number(id)
+                    );
                     if (index !== -1) {
                         this.$set(this.tickets, index, this.normalizeTicket(updated));
                     }
+                }).catch((err) => {
+                    console.error('updateTicket failed:', err);
                 });
+            },
+            /** Apply the same updates to many tickets (parallel API calls). */
+            handleBulkUpdateTickets(payload) {
+                const ids = payload && payload.ids;
+                const updates = (payload && payload.updates) || {};
+                if (!ids || !ids.length) {
+                    return Promise.resolve();
+                }
+                return Promise.all(
+                    ids.map((id) => {
+                        const ticket = this.tickets.find(
+                            (t) => Number(t.id) === Number(id)
+                        );
+                        if (!ticket) {
+                            return Promise.resolve();
+                        }
+                        return updateTicket(
+                            id,
+                            Object.assign({}, updates, {
+                                date: this.formatDate(updates.date || ticket.date)
+                            })
+                        )
+                            .then((updated) => {
+                                const index = this.tickets.findIndex(
+                                    (t) => Number(t.id) === Number(id)
+                                );
+                                if (index !== -1) {
+                                    this.$set(
+                                        this.tickets,
+                                        index,
+                                        this.normalizeTicket(updated)
+                                    );
+                                }
+                            })
+                            .catch((err) => {
+                                console.error('bulkUpdate ticket failed:', id, err);
+                            });
+                    })
+                );
+            },
+            /** DELETE each id in parallel, then remove from local tickets. */
+            handleBulkDeleteTickets(payload) {
+                const ids = payload && payload.ids;
+                if (!ids || !ids.length) {
+                    return Promise.resolve();
+                }
+                return Promise.all(
+                    ids.map((id) =>
+                        deleteTicket(id)
+                            .then(() => {
+                                const index = this.tickets.findIndex(
+                                    (t) => Number(t.id) === Number(id)
+                                );
+                                if (index !== -1) {
+                                    this.tickets.splice(index, 1);
+                                }
+                            })
+                            .catch((err) => {
+                                console.error('bulkDelete ticket failed:', id, err);
+                            })
+                    )
+                );
             }
         },
         components: {

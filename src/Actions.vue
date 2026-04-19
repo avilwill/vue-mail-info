@@ -1,6 +1,6 @@
 <!--
-    Actions: Back button, Mark as Done button, and stage dropdown (On Deck / In Progress / QA Testing).
-    Emits back, mark-done, and select-stage for the parent to handle navigation and API updates.
+    Actions: Back, Edit, Mark as Done, move board/backlog, and stage dropdown (On Deck / In Progress / QA Testing).
+    Emits back, edit, mark-done, move-type, and select-stage for the parent to handle.
 -->
 <template>
     <div class="ticket-option">
@@ -12,6 +12,14 @@
         >
             <i class="fa fa-arrow-left"></i>
             Back
+        </button>
+        <button
+            type="button"
+            class="move-btn"
+            @click="edit"
+        >
+            <i class="fa fa-pencil"></i>
+            Edit
         </button>
         <button
             type="button"
@@ -111,6 +119,9 @@
             },
             markDone() {
                 this.$emit('mark-done');
+            },
+            edit() {
+                this.$emit('edit');
             },
             /** Emit move-type with the target type: 'backlog' when active, 'active' when backlog. */
             moveToOtherBoard() {
